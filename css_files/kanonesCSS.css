@@ -1,0 +1,59 @@
+body {
+  background-image: url(../images/warship.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  margin: 0;
+}
+#Left_Column_Placeholder {
+  float: left;
+  width: 40%;
+  margin-left: 40%;
+  margin-right: 10%;
+}
+#Right_Column_Placeholder {
+  float: left;
+  width: 10%;
+  margin-right: 10%;
+}
+#HeaderDiv {
+  text-align: center;
+}
+
+#MainDiv {
+  float: left;
+  text-align: center;
+  padding-top: 250px;
+}
+
+#Header {
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-shadow: #ddd;
+}
+
+#List {
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.ListItem {
+  background-color: #ddd;
+  color: rgb(0, 0, 0);
+  font-size: 20px;
+}
+
+#footer {
+  text-align: center;
+  padding: 550px;
+}
+
+#BackLink {
+  color: rgb(0, 0, 0);
+  font-size: 30px;
+  text-decoration: none;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+}
+
+#footer :hover {
+  background-color: #ddd;
+}

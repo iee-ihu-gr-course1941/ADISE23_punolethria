@@ -4,57 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="naumaxiaCSS.css">
-    <script src="javascript.js" defer></script>
     <title>Ναυμαχία</title>
-</head>
-<body>
+  </head>
+  <body>
     <pre id="topLeftParagraph">
 <strong><u>Δημιουργοί</u></strong>
 Ανδρέας Κάλο - Α.Μ:2019057
 Δημήτριος Κουτσέλης - Α.Μ: 2019082
     </pre>
-  <div id="welcomingDiv">
-    <h1 id="welcomingTitle">Καλωσήρθατε στην Ναυμαχία</h1>
-  </div>
-  <div>
-    <form id="signupForm" action="signUp.php" method="post" >
-      <div class="container">
-        <h1 class="signUpLoginLabels">Εγγραφή Χρήστη</h1>
+    <div id="div1">
+        <h1 id="welcoming">Καλωσήρθατε στην Ναυμαχία</h1>
+    </div>
+    <div id="div2">
+        <h2>ΜΕΝΟΥ ΠΑΙΧΝΙΔΙΟΥ</h2>
         
-        <hr>
-        
-        <label for="username"><b>Username</b></label>
-        <input id="username" type="text" placeholder="Enter Username" name="username" required>
-        
-        <label for="psw"><b>Password</b></label>
-        <input id="password" type="password" placeholder="Enter Password" name="psw" required>
-      
-        <label for="psw-repeat"><b>Repeat Password</b></label>
-        <input id="passwordRepeat" type="password" placeholder="Repeat Password" name="psw-repeat" required>
-      
-        <div class="clearfix">
-          <button type="button" class="cancelbtn">Cancel</button>
-          <button id="signUpbt" type="submit"  class="signupbtn">Sign Up</button>
-        </div>
-      </div>
-    </form>
+        <ul>
+            <li><a href="kanones.html"><strong>ΚΑΝΟΝΕΣ ΠΑΙΧΝΙΔΙΟΥ</strong></a></li>
+            <li><a href="eggrafi_paikti.html"><strong>ΕΓΓΡΑΦΗ ΠΑΙΚΤΗ</strong></a></li>
+        </ul>
+    </div>
 
-    <form id="loginForm" action="action_page.php" method="post" style="display: none;">
-      <div class="container">
-        <h1 class="signUpLoginLabels">Είσοδος Χρήστη</h1>
-        
-        <hr>
-        <label for="uname"><b>Username</b></label>
-        <input type="text" placeholder="Enter Username" name="uname" required>
     
-        <label for="psw"><b>Password</b></label>
-        <input type="password" placeholder="Enter Password" name="psw" required>
-    
-        <button type="submit">Login</button>
-        <button id="cancelLoginbt"type="button" class="cancelbtn">Cancel</button>
-      </div>
-    </form>
 
-  </div>
 </body>
 </html>
