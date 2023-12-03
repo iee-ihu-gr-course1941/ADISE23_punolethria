@@ -1,0 +1,35 @@
+body {
+    
+    background-image: url(../images/warship.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;  
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    
+    height: 100vh;
+    margin: 0;
+}
+
+#topLeftParagraph {
+    position: absolute; /* Set the position property to absolute */
+    top: 0; /* Position from the top edge of the containing element (in this case, the <html> or <body>) */
+    left: 0; /* Position from the left edge of the containing element */
+    margin: 10px; /* Optional: Add some margin for better visibility */
+    font-size: 20px;
+    color: white;
+  }
+
+#welcomingDivGame{
+    position:relative;
+    text-align: center;
+    top: 200px;
+}
+
+#welcomingTitleGame{
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-shadow: #fff;
+    color: white;
+    text-decoration:underline;
+}
+
