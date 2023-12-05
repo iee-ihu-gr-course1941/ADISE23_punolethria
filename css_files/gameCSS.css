@@ -2,11 +2,10 @@ body {
     
     background-image: url(../images/warship.jpg);
     background-repeat: no-repeat;
-    background-attachment: fixed;  
+    background-attachment: fixed;
     background-size: cover;
     display: flex;
     flex-direction: column;
-    
     height: 100vh;
     margin: 0;
 }
@@ -19,17 +18,29 @@ body {
     font-size: 20px;
     color: white;
   }
-
-#welcomingDivGame{
-    position:relative;
-    text-align: center;
-    top: 200px;
+#container{
+    position: relative;
+}
+#header{
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    color: white;
+    font-size: 25px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-decoration: underline;
+    transform: translate(-50%, 50%);
+    
+}
+#boardL{
+    position: fixed;
+    top: 50%;
+    left: 5%;
 }
 
-#welcomingTitleGame{
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    text-shadow: #fff;
-    color: white;
-    text-decoration:underline;
+#boardR{
+    position: fixed;
+    top: 50%;
+    right: 5%;
 }
 
