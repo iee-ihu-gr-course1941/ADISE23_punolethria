@@ -30,6 +30,7 @@ function cancelSignUp(){
 function showSignupForm() {
     document.getElementById('loginForm').style.display = 'none';
     document.getElementById('signupForm').style.display = 'block';
+    document.getElementById("signInQuestion").style.display = 'block';
 }
 
 var signUpButton = document.getElementById("signUpbt");
@@ -44,4 +45,5 @@ cancelLoginButton.addEventListener('click',showSignupForm);
 function logIn() {
     document.getElementById('signupForm').style.display = 'none';
     document.getElementById('loginForm').style.display = 'block';
+    document.getElementById("signInQuestion").style.display = 'none';
 }
