@@ -13,7 +13,7 @@ body {
 }
 #welcomingDiv{
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 #welcomingTitle{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
@@ -103,4 +103,14 @@ button:hover {
   .cancelbtn, .signupbtn {
     width: 100%;
   }
+}
+#signInQuestion{
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-shadow: #fff;
+  color: white;
+  font-size: 30px;
+}
+a{
+  color: white;
+  font-size: 30px;
 }

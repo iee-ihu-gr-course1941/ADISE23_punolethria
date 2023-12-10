@@ -40,3 +40,8 @@ var cancelLoginButton = document.getElementById("cancelLoginbt");
 signUpButton.addEventListener('click',signUp);
 cancelSignUpButton.addEventListener('click',cancelSignUp);
 cancelLoginButton.addEventListener('click',showSignupForm);
+
+function logIn() {
+    document.getElementById('signupForm').style.display = 'none';
+    document.getElementById('loginForm').style.display = 'block';
+}
