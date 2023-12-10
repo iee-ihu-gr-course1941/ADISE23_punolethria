@@ -43,4 +43,12 @@ body {
     top: 50%;
     right: 5%;
 }
+table{
+    width: 50%;
+    border-collapse: collapse;
+}
+td{
+    background-color: white;
+    
+}
 
