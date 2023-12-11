@@ -1,13 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css_files/indexCSS.css">
-    <script src="javascript.js" defer></script>
+    <meta charset="UTF-8">  
+    <meta name="viewport" content= 
+        "width=device-width, initial-scale=1,  
+        shrink-to-fit=no"> 
+    <link rel="stylesheet" href="../CSS/indexCSS.css">
+    <script src="../JAVASCRIPT/javascript.js" defer></script>
+    <script src="../JQuery/jquery-3.7.1.js"></script>
     <title>Ναυμαχία</title>
   </head>
-  <body>
+  <body>  
     <pre id="topLeftParagraph">
 <strong><u>Δημιουργοί</u></strong>
 Ανδρέας Κάλο - Α.Μ:2019057
@@ -17,7 +20,7 @@
     <h1 id="welcomingTitle">Καλωσήρθατε στην Ναυμαχία</h1>
   </div>
   <div>
-    <form id="signupForm" action="" method="post" >
+    <form id="signupForm">
       <div class="container">
         <h1 class="signUpLoginLabels">Εγγραφή Χρήστη</h1>
         
@@ -27,10 +30,10 @@
         <input id="signUpusername" type="text" placeholder="Enter Username" name="username" required>
         
         <label for="psw"><b>Password</b></label>
-        <input id="signUppassword" type="password" placeholder="Enter Password" name="psw" required>
+        <input id="signUpPassword" type="password" placeholder="Enter Password" name="psw" required>
       
         <label for="psw-repeat"><b>Repeat Password</b></label>
-        <input id="signUppasswordRepeat" type="password" placeholder="Repeat Password" name="psw-repeat" required>
+        <input id="signUpPasswordRepeat" type="password" placeholder="Repeat Password" name="psw-repeat" required>
       
         <div class="clearfix">
           <button id="cancelSignUpbt" type="button" class="cancelbtn">Cancel</button>
@@ -39,7 +42,7 @@
       </div>
     </form>
 
-    <form id="loginForm" action="" method="post" style="display: none;">
+    <form id="loginForm" style="display: none;">
       <div class="container">
         <h1 class="signUpLoginLabels">Είσοδος Χρήστη</h1>
         
@@ -54,7 +57,9 @@
         <button id="cancelLoginbt"type="button" class="cancelbtn">Cancel</button>
       </div>
     </form>
+
     <hr>
+
     <h1 id="signInQuestion">Είστε ήδη μέλος; Πατήστε <a href="#" onclick="logIn()">εδώ</a> για να συνδεθείτε.</h1>
   </div>
 </body>

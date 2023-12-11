@@ -1,12 +1,36 @@
 function signUp() {
     var username = document.getElementById("signUpusername").value;
-    var password = document.getElementById("signUppassword").value;
-    var passwordRepeat = document.getElementById("signUppasswordRepeat").value;
+    var password = document.getElementById("signUpPassword").value;
+    var passwordRepeat = document.getElementById("signUpPasswordRepeat").value;
 
     if (username === "" || password === "" || passwordRepeat === "") {
         window.alert("Please fill in all fields.");
         return false;
     }
+
+    //JSON antikeimeno
+    var data = {
+        playerUsername: username,
+        playerPassword: password,
+        playerPasswordRepeat: passwordRepeat
+    };
+
+    $.ajax({
+        type: 'POST',
+        url: '../PHP/signUp.php', 
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        success: function (response) {
+            // Handle success response
+            alert(response.message);
+        },
+        error: function (error) {
+            // Handle error response
+            alert('Error: ' + error.responseText);
+        }
+    });
+
+
     var loginUsername = document.getElementById("loginUsername") ;
     var loginPassword = document.getElementById("loginPassword") ;
 
