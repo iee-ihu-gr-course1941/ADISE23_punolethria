@@ -1,0 +1,2 @@
+#Ignore db upass
+db_upass.php
