@@ -21,11 +21,9 @@ function signUp() {
         data: JSON.stringify(data),
         contentType: 'application/json',
         success: function (response) {
-            // Handle success response
             alert(response.message);
         },
         error: function (error) {
-            // Handle error response
             alert('Error: ' + error.responseText);
         }
     });

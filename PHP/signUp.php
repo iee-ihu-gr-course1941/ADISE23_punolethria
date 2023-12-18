@@ -6,7 +6,7 @@ $showError = false;
 $exists = false;
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    include 'dbconnect.php';
+    include_once 'dbconnect.php';
 
     $data = json_decode(file_get_contents('php://input'), true);
 
@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $data['playerPassword'];
     $passwordRepeat = $data['playerPasswordRepeat'];
 
-    // Using prepared statements to prevent SQL injection
+    // Prepared Statement
     $stmt = $conn->prepare("SELECT * FROM paiktes WHERE usernamePaikth = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $hash = password_hash($password, PASSWORD_DEFAULT);
 
             // Password Hashing is used here.
-            $stmt = $conn->prepare("INSERT INTO paiktes (etiketaPaikth, usernamePaikth, passwordPaikth) VALUES (?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO naumaxiaDB.paiktes (etiketaPaikth, usernamePaikth, passwordPaikth) VALUES (?, ?, ?)");
             $stmt->bind_param("sss", $playerTag, $username,$hash);
             $stmt->execute();
 
@@ -55,8 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Close the statement
     $stmt->close();
 
-    // Example response
-    $response = array('message' => 'Signup successful');
-    echo json_encode($response);
+    
+   
 }
 ?>
