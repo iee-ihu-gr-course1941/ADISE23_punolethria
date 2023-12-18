@@ -2,7 +2,7 @@
 $user='root';
 $pass='000000';
 $host='localhost';
-$db = 'THE_DB';
+$db = 'naumaxiaDB';
 
 
 $mysqli = new mysqli($host, $user, $pass, $db,null,'/home/student/iee/2019/iee2019057/mysql/run/mysql.sock

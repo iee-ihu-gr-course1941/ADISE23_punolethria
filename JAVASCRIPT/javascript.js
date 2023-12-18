@@ -42,9 +42,9 @@ function signUp() {
 }
 
 function cancelSignUp(){
-    var username = document.getElementById("signUpusername") ;
-    var password = document.getElementById("signUppassword") ;
-    var passwordRepeat = document.getElementById("signUppasswordRepeat") ;
+    var username = document.getElementById("signUpusername");
+    var password = document.getElementById("signUpPassword");
+    var passwordRepeat = document.getElementById("signUpPasswordRepeat");
     
     username.value  = "";
     password.value  = "";
