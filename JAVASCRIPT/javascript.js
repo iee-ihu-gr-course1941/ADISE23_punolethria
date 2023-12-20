@@ -1,3 +1,18 @@
+
+$(function(){
+    var signUpButton = document.getElementById("signUpbt");
+    signUpButton.addEventListener('click',signUp); 
+    var cancelSignUpButton = document.getElementById("cancelSignUpbt");
+    var cancelLoginButton = document.getElementById("cancelLoginbt");
+    cancelSignUpButton.addEventListener('click',cancelSignUp);
+    cancelLoginButton.addEventListener('click',showSignupForm);
+})
+
+
+
+
+
+
 function signUp() {
     var username = document.getElementById("signUpusername").value;
     var password = document.getElementById("signUpPassword").value;
@@ -17,7 +32,7 @@ function signUp() {
 
     $.ajax({
         type: 'POST',
-        url: '../PHP/signUp.php', 
+        url: 'PHP/signUp.php', 
         data: JSON.stringify(data),
         contentType: 'application/json',
         success: function (response) {
@@ -28,6 +43,7 @@ function signUp() {
         }
     });
 
+    //signUpButton.addEventListener('click',signUp);
 
     var loginUsername = document.getElementById("loginUsername") ;
     var loginPassword = document.getElementById("loginPassword") ;
@@ -55,14 +71,7 @@ function showSignupForm() {
     document.getElementById("signInQuestion").style.display = 'block';
 }
 
-var signUpButton = document.getElementById("signUpbt");
-var cancelSignUpButton = document.getElementById("cancelSignUpbt");
-var cancelLoginButton = document.getElementById("cancelLoginbt");
- 
 
-signUpButton.addEventListener('click',signUp);
-cancelSignUpButton.addEventListener('click',cancelSignUp);
-cancelLoginButton.addEventListener('click',showSignupForm);
 
 function logIn() {
     document.getElementById('signupForm').style.display = 'none';
