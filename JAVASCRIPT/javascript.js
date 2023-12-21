@@ -22,6 +22,7 @@ function signUp() {
         window.alert("Please fill in all fields.");
         return false;
     }
+    
 
     //JSON antikeimeno
     var data = {
@@ -39,7 +40,7 @@ function signUp() {
             alert(response.message);
         },
         error: function (error) {
-            alert('Error: ' + error.responseText);
+            alert('Error: ' + error.response);
         }
     });
 
