@@ -3,6 +3,7 @@ header('Content-Type: application/json');
 
 global $mysqli;
 
+
 $showAlert = false;
 $showError = false;
 $exists = false;
