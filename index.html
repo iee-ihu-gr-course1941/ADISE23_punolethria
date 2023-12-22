@@ -1,65 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">  
-    <meta name="viewport" content= 
-        "width=device-width, initial-scale=1,  
-        shrink-to-fit=no"> 
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1,  
+        shrink-to-fit=no"
+    />
     <script src="JQuery/jquery-3.7.1.js"></script>
-    <link rel="stylesheet" href="CSS/indexCSS.css">
-    <script src="JAVASCRIPT/javascript.js" defer></script>
+    <link rel="stylesheet" href="CSS/indexCSS.css" />
+    <script src="JAVASCRIPT/main.js" defer></script>
     <title>Ναυμαχία</title>
   </head>
-  <body>  
+  <body>
     <pre id="topLeftParagraph">
 <strong><u>Δημιουργοί</u></strong>
 Ανδρέας Κάλο - Α.Μ:2019057
 Δημήτριος Κουτσέλης - Α.Μ: 2019082
     </pre>
-  <div id="welcomingDiv">
-    <h1 id="welcomingTitle">Καλωσήρθατε στην Ναυμαχία</h1>
-  </div>
-  <div>
-    <div id="signUpForm">
-      <div class="container">
-        <h1 class="signUpLoginLabels">Εγγραφή Χρήστη</h1>
-        <hr>
-        <label for="username"><b>Username</b></label>
-        <input id="signUpusername" type="text" placeholder="Enter Username" name="username" required>
-        
-        <label for="psw"><b>Password</b></label>
-        <input id="signUpPassword" type="password" placeholder="Enter Password" name="psw" required>
-      
-        <label for="psw-repeat"><b>Repeat Password</b></label>
-        <input id="signUpPasswordRepeat" type="password" placeholder="Repeat Password" name="psw-repeat" required>
-      
-        <div class="clearfix">
-          <button id="cancelSignUpbt" type="button" class="cancelbtn">Cancel</button>
-          <button id="signUpbt" type="button"  class="signupbtn">Sign Up</button>
+    <div id="welcomingDiv">
+      <h1 id="welcomingTitle">Καλωσήρθατε στην Ναυμαχία</h1>
+    </div>
+    <div>
+      <div id="signUpForm">
+        <div class="container">
+          <h1 class="signUpLoginLabels">Εγγραφή Χρήστη</h1>
+          <hr />
+          <label for="username"><b>Username</b></label>
+          <input
+            id="signUpusername"
+            type="text"
+            placeholder="Enter Username"
+            name="username"
+            required
+          />
+
+          <label for="psw"><b>Password</b></label>
+          <input
+            id="signUpPassword"
+            type="password"
+            placeholder="Enter Password"
+            name="psw"
+            required
+          />
+
+          <label for="psw-repeat"><b>Repeat Password</b></label>
+          <input
+            id="signUpPasswordRepeat"
+            type="password"
+            placeholder="Repeat Password"
+            name="psw-repeat"
+            required
+          />
+
+          <div class="clearfix">
+            <button id="cancelSignUpbt" type="button" class="cancelbtn">
+              Cancel
+            </button>
+            <button id="signUpbt" type="button" class="signupbtn">
+              Sign Up
+            </button>
+          </div>
         </div>
       </div>
-    </div>
-    
 
-    <div id="loginForm" style="display: none;">
-      <div class="container">
-        <h1 class="signUpLoginLabels">Είσοδος Χρήστη</h1>
-        
-        <hr>
-        <label for="uname"><b>Username</b></label>
-        <input id="loginUsername" type="text" placeholder="Enter Username" name="uname" required>
-    
-        <label for="psw"><b>Password</b></label>
-        <input id="loginPassword" type="password" placeholder="Enter Password" name="psw" required>
-    
-        <button type="submit">Login</button>
-        <button id="cancelLoginbt"type="button" class="cancelbtn">Cancel</button>
+      <div id="loginForm" style="display: none">
+        <div class="container">
+          <h1 class="signUpLoginLabels">Είσοδος Χρήστη</h1>
+
+          <hr />
+          <label for="uname"><b>Username</b></label>
+          <input
+            id="loginUsername"
+            type="text"
+            placeholder="Enter Username"
+            name="uname"
+            required
+          />
+
+          <label for="psw"><b>Password</b></label>
+          <input
+            id="loginPassword"
+            type="password"
+            placeholder="Enter Password"
+            name="psw"
+            required
+          />
+
+          <button type="submit">Login</button>
+          <button id="cancelLoginbt" type="button" class="cancelbtn">
+            Cancel
+          </button>
+        </div>
       </div>
+
+      <hr />
+
+      <h1 id="signInQuestion">
+        Είστε ήδη μέλος; Πατήστε <a href="#" onclick="logIn()">εδώ</a> για να
+        συνδεθείτε.
+      </h1>
     </div>
-
-    <hr>
-
-    <h1 id="signInQuestion">Είστε ήδη μέλος; Πατήστε <a href="#" onclick="logIn()">εδώ</a> για να συνδεθείτε.</h1>
-  </div>
-</body>
+  </body>
 </html>

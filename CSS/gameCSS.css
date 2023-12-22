@@ -1,55 +1,60 @@
 body {
-    
-    background-image: url(../images/warship.jpg);
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    margin: 0;
+  background-image: url(../images/warship.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
 }
 
 #topLeftParagraph {
-    position: absolute; /* Set the position property to absolute */
-    top: 0; /* Position from the top edge of the containing element (in this case, the <html> or <body>) */
-    left: 0; /* Position from the left edge of the containing element */
-    margin: 10px; /* Optional: Add some margin for better visibility */
-    font-size: 20px;
-    color: white;
-  }
-#container{
-    position: relative;
+  position: absolute; /* Set the position property to absolute */
+  top: 0; /* Position from the top edge of the containing element (in this case, the <html> or <body>) */
+  left: 0; /* Position from the left edge of the containing element */
+  margin: 10px; /* Optional: Add some margin for better visibility */
+  font-size: 20px;
+  color: white;
 }
-#header{
-    position: fixed;
-    top: 20%;
-    left: 50%;
-    color: white;
-    font-size: 25px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    text-decoration: underline;
-    transform: translate(-50%, 50%);
-    
+#container {
+  position: relative;
 }
-#boardL{
-    position: fixed;
-    top: 50%;
-    left: 5%;
+#header {
+  position: fixed;
+  top: 20%;
+  left: 50%;
+  color: white;
+  font-size: 25px;
+  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
+  text-decoration: underline;
+  transform: translate(-50%, 50%);
+}
+#boardL {
+  position: fixed;
+  top: 50%;
+  left: 5%;
 }
 
-#boardR{
-    position: fixed;
-    top: 50%;
-    right: 5%;
+#boardR {
+  position: fixed;
+  top: 50%;
+  right: 5%;
 }
-table{
-    width: 50%;
-    border-collapse: collapse;
+table {
+  width: 50%;
+  border-collapse: collapse;
 }
-td{
-    background-color: white;
-    
+td {
+  background-color: white;
 }
-td:hover{background-color:cadetblue;}
+td:hover {
+  background-color: cadetblue;
+}
 
+#carrierButton,
+#cruiserButton,
+#submarineButton,
+#destroyerButton {
+  visibility: hidden;
+}
