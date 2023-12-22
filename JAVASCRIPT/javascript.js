@@ -22,6 +22,10 @@ function signUp() {
         window.alert("Please fill in all fields.");
         return false;
     }
+    if(password != passwordRepeat){
+        window.alert("Passwords do not match!")
+        return false;
+    }
     
 
     //JSON antikeimeno
@@ -32,17 +36,25 @@ function signUp() {
     };
 
     $.ajax({
-        type: 'POST',
-        url: 'PHP/signUp.php', 
+        url: 'PHP/signUp.php',
+        method: 'POST',
+        datatype: 'json',
         data: JSON.stringify(data),
         contentType: 'application/json',
-        success: function (response) {
-            alert(response.message);
-        },
-        error: function (error) {
-            alert('Error: ' + error.response);
-        }
-    });
+        success: signUpResult,
+        error:signUpError});
+
+
+    function signUpResult(){
+        $('#signUpForm').hide();
+        $('#loginForm').show();
+
+    }
+
+    function signUpError(data){
+        var x = data.responseJSON;
+	    alert(x.errormesg);
+    }
 
     //signUpButton.addEventListener('click',signUp);
 
@@ -52,8 +64,7 @@ function signUp() {
     loginUsername.value = "";
     loginPassword.value = "";
     
-    document.getElementById('signupForm').style.display = 'none';
-    document.getElementById('loginForm').style.display = 'block';
+   
 }
 
 function cancelSignUp(){
