@@ -28,7 +28,7 @@ function initiateBoards() {
   var table = document.createElement("TABLE");
   table.border = "1";
 
-  //O pinakas exei friendlyBoard id kai to ka8e cell friendly$i,$j
+  //O pinakas exei friendlyBoard id kai to ka8e cell $i,$j
   var tableBody = document.createElement("TBODY");
   tableBody.setAttribute("id", "friendlyBoard");
   table.appendChild(tableBody);
@@ -40,9 +40,10 @@ function initiateBoards() {
     for (var j = 0; j < 10; j++) {
       var td = document.createElement("TD");
       td.width = "75";
+      td.height = "25";
       td.setAttribute("id", i + "," + j);
       td.addEventListener("click", placeShipOnBoard);
-      td.appendChild(document.createTextNode("Cell " + i + "," + j));
+      td.appendChild(document.createTextNode(" "));
       tr.appendChild(td);
     }
   }
@@ -68,13 +69,15 @@ function initiateBoards() {
       td.setAttribute("id", i + "," + j);
       td.addEventListener("click", attackOnBoard);
       td.width = "75";
-      td.appendChild(document.createTextNode("Cell " + i + "," + j));
+      td.height = "25";
+      td.appendChild(document.createTextNode(" "));
       tr.appendChild(td);
     }
   }
   rightBoard.appendChild(table);
 }
 
+//H synarthsh energopoiei thn leitourgeia gia topo8ethsh aeroplanoforou ston pinaka
 function addCarrier() {
   alert(
     "Επιλέξτε τα κελιά που θα είναι η αρχή και το τέλος του πλοίου (5 σε ευθεία γραμμή κάθετα ή οριζόντια)"
@@ -85,6 +88,7 @@ function addCarrier() {
   isCarrier = true;
 }
 
+//H synarthsh energopoiei thn leitourgeia gia topo8ethsh antitorpilikou ston pinaka
 function addDestroyer() {
   alert(
     "Επιλέξτε τα κελιά που θα είναι η αρχή και το τέλος του πλοίου (4 σε ευθεία γραμμή κάθετα ή οριζόντια)"
@@ -95,6 +99,7 @@ function addDestroyer() {
   isDestroyer = true;
 }
 
+//synarthsh energopoiei thn leitourgeia gia topo8ethsh Polemikou ston pinaka
 function addCruiser() {
   alert(
     "Επιλέξτε τα κελιά που θα είναι η αρχή και το τέλος του πλοίου (3 σε ευθεία γραμμή κάθετα ή οριζόντια)"
@@ -105,6 +110,7 @@ function addCruiser() {
   isCruiser = true;
 }
 
+//synarthsh energopoiei thn leitourgeia gia topo8ethsh ypobrixiou ston pinaka
 function addSubmarine() {
   alert(
     "Επιλέξτε τα κελιά που θα είναι η αρχή και το τέλος του πλοίου (2 σε ευθεία γραμμή κάθετα ή οριζόντια)"
@@ -115,13 +121,20 @@ function addSubmarine() {
   isSubmarine = true;
 }
 
+//Basikh synarthsh tou game, topo8etei ta ploia ston pinaka
 function placeShipOnBoard(e) {
+  //to e krataei to keli sto opoio ekane click o paikths
   e = e || window.event;
   e = e.target || e.srcElement;
+
+  //Ta if(isCarrier, isSubmarine, ...) elegxoun poio ploio topo8eteitai ka8e stigmh ston pinaka
   if (isCarrier) {
+    //To carrierCells emperiexei ta kelia pou apoteloyn arxh kai telos tou aeroplanoforou
     carrierCells.push(e.id);
+    //Elegxos an exoun epilegxei 2 kelia apo ton xrhsth gia thn topo8ethsh tou carrier
     if (carrierCells.length == 2) {
       isCarrier = false;
+      //Apo8hkeysh twn syntetagmenwn twn keliwn se 4 metavlhtes x1,y1,x2,y2
       let index_1 = String(carrierCells[0]).split(",");
       let index_2 = String(carrierCells[1]).split(",");
       x1 = index_1[0];
@@ -129,20 +142,25 @@ function placeShipOnBoard(e) {
       x2 = index_2[0];
       y2 = index_2[1];
 
+      //An ta dyo kelia briskontai sthn idia grammh
       if (x1 == x2) {
+        //Elegxos an exoun epilagei swsta kelia apo ton xrhsth
         if (y1 - y2 == 4 || y2 - y1 == 4) {
           alert("Correct Input!!");
           carrierPlaced = true;
           document.getElementById("carrierButton").style.visibility = "hidden";
-
+          //To if/else xreiazetai dioti mporei o xrhsths na epeleje ta kelia apo dejia pros ta aristera h anapoda
           if (y1 - y2 == 4) {
-            for (let ind = y1; ind < y2; ind--) {
+            for (let ind = y1; ind >= y2; ind--) {
+              console.log("Y1:" + y1 + " Y2:" + y2);
+              //Afaireitai o EventListener wste o xrhsths na mhn mporei na pathsei kelia sta opoia einai topo8ethmeno hsh ploio kai meta bafontai gri
               let string_index = String(x1 + "," + ind);
               document
                 .getElementById(string_index)
                 .removeEventListener("click", placeShipOnBoard);
               document.getElementById(string_index).style.backgroundColor =
-                "gray";
+                "#666666";
+              document.getElementById(string_index).style.border = "#666666";
             }
           } else {
             for (let ind = y1; ind <= y2; ind++) {
@@ -151,26 +169,30 @@ function placeShipOnBoard(e) {
                 .getElementById(string_index)
                 .removeEventListener("click", placeShipOnBoard);
               document.getElementById(string_index).style.backgroundColor =
-                "gray";
+                "#666666";
+              document.getElementById(string_index).style.border = "#666666";
             }
           }
+          //to else einai h periptwsh pou den exei ginei swsta h epilogh twn keliwn  apo ton xrhsth
         } else {
           alert("Wrong Input!!");
           carrierCells = [];
         }
+        //Idia diadikasia me prin alla gia ta kelia na briskontai sthn idia sthlh
       } else if (y1 == y2) {
         if (x1 - x2 == 4 || x2 - x1 == 4) {
           alert("Correct Input!!");
           carrierPlaced = true;
           document.getElementById("carrierButton").style.visibility = "hidden";
           if (x1 - x2 == 4) {
-            for (let ind = x1; ind < x2; ind--) {
+            for (let ind = x1; ind >= x2; ind--) {
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
                 .removeEventListener("click", placeShipOnBoard);
               document.getElementById(string_index).style.backgroundColor =
-                "gray";
+                "#666666";
+              document.getElementById(string_index).style.border = "#666666";
             }
           } else {
             for (let ind = x1; ind <= x2; ind++) {
@@ -179,17 +201,20 @@ function placeShipOnBoard(e) {
                 .getElementById(string_index)
                 .removeEventListener("click", placeShipOnBoard);
               document.getElementById(string_index).style.backgroundColor =
-                "gray";
+                "#666666";
+              document.getElementById(string_index).style.border = "#666666";
             }
           }
         } else {
           alert("Wrong Input!!");
           carrierCells = [];
         }
+        //Elegxos an ta kelia einai entelws la8os dld diaforetikh seira kai sthlh
       } else {
         alert("Wrong Input!!");
         carrierCells = [];
       }
+      //Emfanisi twn Koumpiwn gia topo8ethsh twn allwn ploiwn arkei na mhn exoun hdh topo8eth8ei prohgoumenos
       if (!submarinePlaced) {
         document.getElementById("submarineButton").style.visibility = "visible";
       }
@@ -200,6 +225,7 @@ function placeShipOnBoard(e) {
         document.getElementById("cruiserButton").style.visibility = "visible";
       }
     }
+    //idia diadikasia me to carrier apla gia to cruiser
   } else if (isCruiser) {
     cruiserCells.push(e.id);
     if (cruiserCells.length == 2) {
@@ -219,13 +245,14 @@ function placeShipOnBoard(e) {
           document.getElementById("cruiserButton").style.visibility = "hidden";
 
           if (y1 - y2 == 2) {
-            for (let ind = y1; ind < y2; ind--) {
+            for (let ind = y1; ind >= y2; ind--) {
               let string_index = String(x1 + "," + ind);
               document
                 .getElementById(string_index)
                 .removeEventListener("click", placeShipOnBoard);
               document.getElementById(string_index).style.backgroundColor =
-                "gray";
+                "#707070";
+              document.getElementById(string_index).style.border = "#707070";
             }
           } else {
             for (let ind = y1; ind <= y2; ind++) {
@@ -234,7 +261,8 @@ function placeShipOnBoard(e) {
                 .getElementById(string_index)
                 .removeEventListener("click", placeShipOnBoard);
               document.getElementById(string_index).style.backgroundColor =
-                "gray";
+                "#707070";
+              document.getElementById(string_index).style.border = "#707070";
             }
           }
         } else {
@@ -247,13 +275,14 @@ function placeShipOnBoard(e) {
           cruiserPlaced = true;
           document.getElementById("cruiserButton").style.visibility = "hidden";
           if (x1 - x2 == 2) {
-            for (let ind = x1; ind < x2; ind--) {
+            for (let ind = x1; ind >= x2; ind--) {
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
                 .removeEventListener("click", placeShipOnBoard);
               document.getElementById(string_index).style.backgroundColor =
-                "gray";
+                "#707070";
+              document.getElementById(string_index).style.border = "#707070";
             }
           } else {
             for (let ind = x1; ind <= x2; ind++) {
@@ -262,7 +291,8 @@ function placeShipOnBoard(e) {
                 .getElementById(string_index)
                 .removeEventListener("click", placeShipOnBoard);
               document.getElementById(string_index).style.backgroundColor =
-                "gray";
+                "#707070";
+              document.getElementById(string_index).style.border = "#707070";
             }
           }
         } else {
@@ -284,6 +314,7 @@ function placeShipOnBoard(e) {
         document.getElementById("destroyerButton").style.visibility = "visible";
       }
     }
+    //idia diadikasia me to carrier apla gia to destroyer
   } else if (isDestroyer) {
     destroyerCells.push(e.id);
     if (destroyerCells.length == 2) {
@@ -304,13 +335,15 @@ function placeShipOnBoard(e) {
             "hidden";
 
           if (y1 - y2 == 3) {
-            for (let ind = y1; ind < y2; ind--) {
+            for (let ind = y1; ind >= y2; ind--) {
+              console.log("Eimai edw");
               let string_index = String(x1 + "," + ind);
               document
                 .getElementById(string_index)
                 .removeEventListener("click", placeShipOnBoard);
               document.getElementById(string_index).style.backgroundColor =
-                "gray";
+                "#5d5555";
+              document.getElementById(string_index).style.border = "#5d5555";
             }
           } else {
             for (let ind = y1; ind <= y2; ind++) {
@@ -319,7 +352,8 @@ function placeShipOnBoard(e) {
                 .getElementById(string_index)
                 .removeEventListener("click", placeShipOnBoard);
               document.getElementById(string_index).style.backgroundColor =
-                "gray";
+                "#5d5555";
+              document.getElementById(string_index).style.border = "#5d5555";
             }
           }
         } else {
@@ -333,13 +367,14 @@ function placeShipOnBoard(e) {
           document.getElementById("destroyerButton").style.visibility =
             "hidden";
           if (x1 - x2 == 3) {
-            for (let ind = x1; ind < x2; ind--) {
+            for (let ind = x1; ind >= x2; ind--) {
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
                 .removeEventListener("click", placeShipOnBoard);
               document.getElementById(string_index).style.backgroundColor =
-                "gray";
+                "#5d5555";
+              document.getElementById(string_index).style.border = "#5d5555";
             }
           } else {
             for (let ind = x1; ind <= x2; ind++) {
@@ -348,7 +383,8 @@ function placeShipOnBoard(e) {
                 .getElementById(string_index)
                 .removeEventListener("click", placeShipOnBoard);
               document.getElementById(string_index).style.backgroundColor =
-                "gray";
+                "#5d5555";
+              document.getElementById(string_index).style.border = "#5d5555";
             }
           }
         } else {
@@ -369,6 +405,7 @@ function placeShipOnBoard(e) {
         document.getElementById("cruiserButton").style.visibility = "visible";
       }
     }
+    //idia diadikasia me to carrier apla gia to submarine
   } else if (isSubmarine) {
     submarineCells.push(e.id);
     if (submarineCells.length == 2) {
@@ -386,13 +423,14 @@ function placeShipOnBoard(e) {
           alert("Correct Input!!");
           counter = counter + 1;
           if (y1 - y2 == 1) {
-            for (let ind = y1; ind < y2; ind--) {
+            for (let ind = y1; ind >= y2; ind--) {
               let string_index = String(x1 + "," + ind);
               document
                 .getElementById(string_index)
                 .removeEventListener("click", placeShipOnBoard);
               document.getElementById(string_index).style.backgroundColor =
-                "gray";
+                "#716868";
+              document.getElementById(string_index).style.border = "#716868";
             }
           } else {
             for (let ind = y1; ind <= y2; ind++) {
@@ -401,7 +439,8 @@ function placeShipOnBoard(e) {
                 .getElementById(string_index)
                 .removeEventListener("click", placeShipOnBoard);
               document.getElementById(string_index).style.backgroundColor =
-                "gray";
+                "#716868";
+              document.getElementById(string_index).style.border = "#716868";
             }
           }
           if (counter > 1) {
@@ -409,14 +448,18 @@ function placeShipOnBoard(e) {
             document.getElementById("submarineButton").style.visibility =
               "hidden";
             document.getElementById(submarineCells[0]).style.backgroundColor =
-              "gray";
+              "#716868";
             document.getElementById(submarineCells[1]).style.backgroundColor =
-              "gray";
+              "#716868";
+            document.getElementById(submarineCells[0]).style.border = "#716868";
+            document.getElementById(submarineCells[1]).style.border = "#716868";
           } else if (counter == 1) {
             document.getElementById(submarineCells[0]).style.backgroundColor =
-              "gray";
+              "#716868";
             document.getElementById(submarineCells[1]).style.backgroundColor =
-              "gray";
+              "#716868";
+            document.getElementById(submarineCells[0]).style.border = "#716868";
+            document.getElementById(submarineCells[1]).style.border = "#716868";
             submarineCells = [];
           }
         } else {
@@ -429,13 +472,14 @@ function placeShipOnBoard(e) {
 
           counter = counter + 1;
           if (x1 - x2 == 1) {
-            for (let ind = x1; ind < x2; ind--) {
+            for (let ind = x1; ind >= x2; ind--) {
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
                 .removeEventListener("click", placeShipOnBoard);
               document.getElementById(string_index).style.backgroundColor =
-                "gray";
+                "#716868";
+              document.getElementById(string_index).style.border = "#716868";
             }
           } else {
             for (let ind = x1; ind <= x2; ind++) {
@@ -444,7 +488,8 @@ function placeShipOnBoard(e) {
                 .getElementById(string_index)
                 .removeEventListener("click", placeShipOnBoard);
               document.getElementById(string_index).style.backgroundColor =
-                "gray";
+                "#716868";
+              document.getElementById(string_index).style.border = "#716868";
             }
           }
           if (counter > 1) {
@@ -452,15 +497,19 @@ function placeShipOnBoard(e) {
             document.getElementById("submarineButton").style.visibility =
               "hidden";
             document.getElementById(submarineCells[0]).style.backgroundColor =
-              "gray";
+              "#716868";
             document.getElementById(submarineCells[1]).style.backgroundColor =
-              "gray";
+              "#716868";
+            document.getElementById(submarineCells[0]).style.border = "#716868";
+            document.getElementById(submarineCells[1]).style.border = "#716868";
           } else if (counter == 1) {
             submarineCells = [];
             document.getElementById(submarineCells[0]).style.backgroundColor =
-              "gray";
+              "#716868";
             document.getElementById(submarineCells[1]).style.backgroundColor =
-              "gray";
+              "#716868";
+            document.getElementById(submarineCells[0]).style.border = "#716868";
+            document.getElementById(submarineCells[1]).style.border = "#716868";
           }
         } else {
           alert("Wrong Input!!");
@@ -483,8 +532,29 @@ function placeShipOnBoard(e) {
   }
 }
 
+//Synarthsh gia epi8esh sta ploia tou antipalou
 function attackOnBoard(e) {
   e = e || window.event;
   e = e.target || e.srcElement;
-  alert("Hey i am : " + e.id);
+  if (carrierPlaced && cruiserCells && submarinePlaced && destroyerPlaced) {
+    alert("Attackin on : " + e.id);
+  } else {
+    alert("You cannot attack before placing every ship");
+  }
 }
+
+//JSON antikeimeno
+var data = {
+  shipType: shipType,
+  cellCords: cords,
+};
+
+$.ajax({
+  url: "PHP/game.php",
+  method: "POST",
+  datatype: "json",
+  data: JSON.stringify(data),
+  contentType: "application/json",
+  success: signUpResult,
+  error: signUpError,
+});
