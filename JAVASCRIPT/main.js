@@ -103,17 +103,19 @@ function logIn() {
         data: JSON.stringify(logInData),
         contentType: 'application/json',
         success: function (response) {
-                successMessage = response.message;
-                alert(successMessage);
+            if (response.status === 'success') {
+                alert(response.message);
                 document.getElementById("loginForm").style.display = 'none';
                 document.getElementById("logInQuestion").style.display = "none";
                 window.location.href = 'HTML/kanones.html';
-                console.log(successMessage);
+            } else {
+                console.error("Unexpected success response:", response);
+            }
         },
-        error: function (response) {
-            errorMessage = "Σφάλμα: " + response.message;
-            console.log(errorMessage);
-            alert(errorMessage);
+        error:function (response){
+            successMessage = "Σφάλμα: " + response.message;
+            console.log(successMessage);
+            alert(successMessage);
         }
     });
 }
