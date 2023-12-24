@@ -1,19 +1,22 @@
 
 $(function(){
+
     var signUpButton = document.getElementById("signUpbt");
-    signUpButton.addEventListener('click',signUp); 
     var cancelSignUpButton = document.getElementById("cancelSignUpbt");
+
+    var logInButton = document.getElementById("logInBtn")
     var cancelLoginButton = document.getElementById("cancelLoginbt");
+
+
+
+    signUpButton.addEventListener('click',signUp); 
     cancelSignUpButton.addEventListener('click',cancelSignUp);
+    logInButton.addEventListener('click',logIn);
     cancelLoginButton.addEventListener('click',showSignupForm);
 })
 
-
-
-
-
-
 function signUp() {
+    
     var username = document.getElementById("signUpusername").value;
     var password = document.getElementById("signUpPassword").value;
     var passwordRepeat = document.getElementById("signUpPasswordRepeat").value;
@@ -26,10 +29,9 @@ function signUp() {
         window.alert("Passwords do not match!")
         return false;
     }
-    
 
     //JSON antikeimeno
-    var data = {
+    var signUpdata = {
         playerUsername: username,
         playerPassword: password,
         playerPasswordRepeat: passwordRepeat
@@ -38,25 +40,24 @@ function signUp() {
     $.ajax({
         url: 'PHP/signUp.php',
         method: 'POST',
-        datatype: 'json',
-        data: JSON.stringify(data),
+        dataType: 'json',
+        data: JSON.stringify(signUpdata),
         contentType: 'application/json',
-        success: signUpResult,
-        error:signUpError});
+        success: function (response){
+           
+                successMessage = response.message;
+                alert(successMessage);
+            
+            document.getElementById("signUpForm").style.display = 'none'; 
+            document.getElementById("signInQuestion").style.display = 'none';
+            document.getElementById("loginForm").style.display = 'block';
+            document.getElementById("logInQuestion").style.display = "block";
+            },
+        error:function (response){
+            successMessage = "Σφάλμα: " + response.message;
+            alert(successMessage);
+        }});
 
-
-    function signUpResult(){
-        $('#signUpForm').hide();
-        $('#loginForm').show();
-
-    }
-
-    function signUpError(data){
-        var x = data.responseJSON;
-	    alert(x.errormesg);
-    }
-
-    //signUpButton.addEventListener('click',signUp);
 
     var loginUsername = document.getElementById("loginUsername") ;
     var loginPassword = document.getElementById("loginPassword") ;
@@ -79,14 +80,49 @@ function cancelSignUp(){
 
 function showSignupForm() {
     document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('signupForm').style.display = 'block';
+    document.getElementById('signUpForm').style.display = 'block';
     document.getElementById("signInQuestion").style.display = 'block';
+    document.getElementById("logInQuestion").style.display = "none";
+    cancelSignUp();
+}
+
+
+function logIn() {
+    var username = document.getElementById("loginUsername").value;
+    var password = document.getElementById("loginPassword").value;
+
+    var logInData = {
+        playerUsername: username,
+        playerPassword: password
+    };
+    
+    $.ajax({
+        url: 'PHP/logIn.php',
+        method: 'POST',
+        dataType: 'json',
+        data: JSON.stringify(logInData),
+        contentType: 'application/json',
+        success: function (response) {
+                successMessage = response.message;
+                alert(successMessage);
+                document.getElementById("loginForm").style.display = 'none';
+                document.getElementById("logInQuestion").style.display = "none";
+                window.location.href = 'HTML/kanones.html';
+                console.log(successMessage);
+        },
+        error: function (response) {
+            errorMessage = "Σφάλμα: " + response.message;
+            console.log(errorMessage);
+            alert(errorMessage);
+        }
+    });
 }
 
 
 
-function logIn() {
-    document.getElementById('signupForm').style.display = 'none';
+function showLogInForm() {
+    document.getElementById('signUpForm').style.display = 'none';
     document.getElementById('loginForm').style.display = 'block';
     document.getElementById("signInQuestion").style.display = 'none';
+    document.getElementById("logInQuestion").style.display = 'block';
 }

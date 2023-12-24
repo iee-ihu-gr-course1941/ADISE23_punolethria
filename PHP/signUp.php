@@ -8,17 +8,19 @@ $showAlert = false;
 $showError = false;
 $exists = false;
 
+function assignTag() {
+    $tags = array('friend', 'foe');
+    $randomIndex = array_rand($tags);
+    return $tags[$randomIndex];
+}
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    include_once 'dbconnect.php';
+    include 'dbconnect.php';
 
     $data = json_decode(file_get_contents('php://input'), true);
 
-    function assignTag() {
-        $tags = array('friend', 'foe');
-        $randomIndex = array_rand($tags);
-        return $tags[$randomIndex];
-    }
-    
+    $sessionId = session_id();
     $playerTag = assignTag();
     $username = $data['playerUsername'];
     $password = $data['playerPassword'];
@@ -46,12 +48,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->execute();
 
             if ($stmt->affected_rows > 0) {
+                $response = array("status" => "success", "message" => "Η εγγραφή πραγματοποιήθηκε με επιτυχία!");
                 $showAlert = true;
             } else {
+                $response = array("status" => "error", "message" => "Σφάλμα εγγραφής!");
                 $showError = "Error in inserting record.";
             }
-        } else {
-            $showError = "Passwords do not match";
+            echo json_encode($response);
         }
     }
 

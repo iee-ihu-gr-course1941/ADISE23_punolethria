@@ -87,7 +87,7 @@
             required
           />
 
-          <button type="submit">Login</button>
+          <button id="logInBtn" type="button">Login</button>
           <button id="cancelLoginbt" type="button" class="cancelbtn">
             Cancel
           </button>
@@ -97,9 +97,12 @@
       <hr />
 
       <h1 id="signInQuestion">
-        Είστε ήδη μέλος; Πατήστε <a href="#" onclick="logIn()">εδώ</a> για να
-        συνδεθείτε.
-      </h1>
+        Είστε ήδη μέλος; Πατήστε <a href="#" onclick="showLogInForm()">εδώ</a> για να
+        συνδεθείτε.</h1>
+
+      <h1 id="logInQuestion" style="display: none">
+        Για νέα εγγραφή πατήστε <a href="#" onclick="showSignupForm()">εδώ</a></h1>
+
     </div>
   </body>
 </html>

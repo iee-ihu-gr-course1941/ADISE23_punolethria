@@ -110,6 +110,14 @@ button:hover {
   color: white;
   font-size: 30px;
 }
+
+#logInQuestion {
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  text-shadow: 2px 2px 2px #fff;  /* Add offset values (horizontal, vertical, blur) */
+  color: white;
+  font-size: 30px;
+}
+
 a{
   color: white;
   font-size: 30px;
