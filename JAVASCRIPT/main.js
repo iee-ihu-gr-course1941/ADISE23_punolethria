@@ -95,7 +95,7 @@ function logIn() {
         playerUsername: username,
         playerPassword: password
     };
-    
+
     $.ajax({
         url: 'PHP/logIn.php',
         method: 'POST',
@@ -112,10 +112,10 @@ function logIn() {
                 console.error("Unexpected success response:", response);
             }
         },
-        error:function (response){
-            successMessage = "Σφάλμα: " + response.message;
-            console.log(successMessage);
-            alert(successMessage);
+        error: function (jqXHR) {
+            var errorMessage = "Σφάλμα: " + jqXHR.responseJSON.message;
+            console.log(errorMessage);
+            alert(errorMessage);
         }
     });
 }

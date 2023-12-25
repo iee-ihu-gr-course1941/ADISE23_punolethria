@@ -4,8 +4,7 @@ header('Content-Type: application/json');
 global $mysqli;
 
 
-$showAlert = false;
-$showError = false;
+
 $exists = false;
 
 function assignTag() {
@@ -20,7 +19,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $data = json_decode(file_get_contents('php://input'), true);
 
-    $sessionId = session_id();
     $playerTag = assignTag();
     $username = $data['playerUsername'];
     $password = $data['playerPassword'];
@@ -33,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->store_result();
     $num = $stmt->num_rows;
 
-    // Check if the username is already present
+    // Elegxos an to onoma yparxei hdh
     if ($num > 0) {
         $exists = true;
     }
@@ -42,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             $hash = password_hash($password, PASSWORD_DEFAULT);
 
-            // Password Hashing is used here.
+            // Hashing
             $stmt = $mysqli->prepare("INSERT INTO naumaxiaDB.paiktes (etiketaPaikth, usernamePaikth, passwordPaikth) VALUES (?, ?, ?)");
             $stmt->bind_param("sss", $playerTag, $username, $hash);
             $stmt->execute();
@@ -52,7 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $showAlert = true;
             } else {
                 $response = array("status" => "error", "message" => "Σφάλμα εγγραφής!");
-                $showError = "Error in inserting record.";
             }
             echo json_encode($response);
         }
