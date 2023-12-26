@@ -23,6 +23,7 @@ function initiateBoards() {
   document.getElementById("cruiserButton").style.visibility = "visible";
   document.getElementById("destroyerButton").style.visibility = "visible";
   document.getElementById("submarineButton").style.visibility = "visible";
+  document.getElementById("rulesButton").style.visibility = "hidden";
   //Dhmioyrgeia tou pinaka topo8ethshs twn ploiwn
   var leftBoard = document.getElementById("boardL");
 
@@ -579,6 +580,10 @@ function attackOnBoard(e) {
 
 function attack() {
   attackIsOn = true;
+}
+
+function goToRules() {
+  window.open("./kanones.html");
 }
 
 //JSON antikeimeno
