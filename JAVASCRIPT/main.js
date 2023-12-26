@@ -1,6 +1,3 @@
-
-var me={token:null};
-
 $(function(){
 
     var signUpButton = document.getElementById("signUpbt");
@@ -8,8 +5,6 @@ $(function(){
 
     var logInButton = document.getElementById("logInBtn")
     var cancelLoginButton = document.getElementById("cancelLoginbt");
-
-
 
     signUpButton.addEventListener('click',signUp); 
     cancelSignUpButton.addEventListener('click',cancelSignUp);
@@ -88,33 +83,25 @@ function showSignupForm() {
     cancelSignUp();
 }
 
-function generateHex(size) {
-    return [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
-}
-
-
 function logIn() {
     var username = document.getElementById("loginUsername").value;
     var password = document.getElementById("loginPassword").value;
-    var token = generateHex();
 
     var logInData = {
         playerUsername: username,
         playerPassword: password,
-        playerToken: token
     };
 
     $.ajax({
         url: 'PHP/logIn.php',
         method: 'POST',
         dataType: 'json',
-        headers: {"X-Token": me.token},
         data: JSON.stringify(logInData),
         contentType: 'application/json',
         success: function (response) {
             if (response.status === 'success') {
-                alert(response.message);
-                alert('Token='+me.token);
+                var userId = response.user_id;
+                console.log(userId);
                 document.getElementById("loginForm").style.display = 'none';
                 document.getElementById("logInQuestion").style.display = "none";
                 window.location.href = 'HTML/game.html';

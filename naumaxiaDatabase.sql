@@ -282,13 +282,13 @@ INSERT INTO `friendlyboats` (`onomaPliou`, `mhkosPliou`, `posothtaPliwn`) VALUES
 
 
 -- Dumping structure for table naumaxiaDatabase.paiktes
-CREATE TABLE IF NOT EXISTS `paiktes` (
-  `etiketaPaikth` varchar(20) NOT NULL,
-  `usernamePaikth` varchar(20) NOT NULL DEFAULT 'Εισαγωγή username',
-  `passwordPaikth` varchar(50) NOT NULL,
-  'tokenPaikth' varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin COMMENT='apothikeysh twn stoixeiwn twn paiktwn';
-
+CREATE TABLE `paiktes` (
+	`etiketaPaikth` VARCHAR(20) NOT NULL COLLATE 'utf8mb3_bin',
+	`usernamePaikth` VARCHAR(20) NOT NULL DEFAULT 'Εισαγωγή username' COLLATE 'utf8mb3_bin',
+	`passwordPaikth` VARCHAR(100) NOT NULL DEFAULT '' COLLATE 'utf8mb3_bin',
+	`idPaikth` INT(11) NOT NULL AUTO_INCREMENT,
+	PRIMARY KEY (`idPaikth`) USING BTREE
+)
 -- Dumping data for table naumaxiaDatabase.paiktes: ~0 rows (approximately)
 
 -- Dumping structure for table naumaxiaDatabase.statuspaixnidiou
