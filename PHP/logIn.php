@@ -1,10 +1,14 @@
 <?php
 header('Content-Type: application/json');
 
+if(isset($_SERVER['HTTP_X_TOKEN'])) {
+    $input['token']=$_SERVER['HTTP_X_TOKEN'];
+} else {
+    $input['token']='';
+}
+
+
 session_start();
-
-
-
 
 global $mysqli;
 $session_id = session_create_id();
@@ -26,7 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->num_rows == 1 && password_verify($password, $hashedPassword)) {
         $_SESSION['login_user'] = $dbUsername;
-        $stmt = $mysqli->prepare("INSERT INTO naumaxiaDB.paiktes (etiketaPaikth, usernamePaikth, passwordPaikth) VALUES (?, ?, ?)");
         $response = array("status" => "success", "message" => "Η σύνδεση πραγματοποιήθηκε με επιτυχία!");
 
         

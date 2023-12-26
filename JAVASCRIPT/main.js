@@ -1,4 +1,6 @@
 
+var me={token:null};
+
 $(function(){
 
     var signUpButton = document.getElementById("signUpbt");
@@ -106,15 +108,17 @@ function logIn() {
         url: 'PHP/logIn.php',
         method: 'POST',
         dataType: 'json',
+        headers: {"X-Token": me.token},
         data: JSON.stringify(logInData),
         contentType: 'application/json',
         success: function (response) {
             if (response.status === 'success') {
                 alert(response.message);
-                alert("Session ID: " + response.sessionID); // Display the session ID
+                alert('Token='+me.token);
                 document.getElementById("loginForm").style.display = 'none';
                 document.getElementById("logInQuestion").style.display = "none";
                 window.location.href = 'HTML/game.html';
+                
             } else {
                 console.error("Unexpected success response:", response);
             }
@@ -126,6 +130,8 @@ function logIn() {
         }
     });
 }
+
+
 
 
 

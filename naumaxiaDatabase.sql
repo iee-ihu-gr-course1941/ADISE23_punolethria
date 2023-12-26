@@ -286,7 +286,7 @@ CREATE TABLE IF NOT EXISTS `paiktes` (
   `etiketaPaikth` varchar(20) NOT NULL,
   `usernamePaikth` varchar(20) NOT NULL DEFAULT 'Εισαγωγή username',
   `passwordPaikth` varchar(50) NOT NULL,
-  PRIMARY KEY (`etiketaPaikth`)
+  'tokenPaikth' varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin COMMENT='apothikeysh twn stoixeiwn twn paiktwn';
 
 -- Dumping data for table naumaxiaDatabase.paiktes: ~0 rows (approximately)
