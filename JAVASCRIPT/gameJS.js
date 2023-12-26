@@ -3,6 +3,7 @@
   var isSubmarine = false;
   var isDestroyer = false;
   var isCruiser = false;
+  var attackIsOn = false;
   var carrierPlaced = false;
   var submarinePlaced = false;
   var destroyerPlaced = false;
@@ -224,6 +225,14 @@ function placeShipOnBoard(e) {
       if (!cruiserPlaced) {
         document.getElementById("cruiserButton").style.visibility = "visible";
       }
+      if (
+        cruiserPlaced &&
+        submarinePlaced &&
+        carrierPlaced &&
+        destroyerPlaced
+      ) {
+        document.getElementById("attackButton").style.visibility = "visible";
+      }
     }
     //idia diadikasia me to carrier apla gia to cruiser
   } else if (isCruiser) {
@@ -312,6 +321,14 @@ function placeShipOnBoard(e) {
       }
       if (!destroyerPlaced) {
         document.getElementById("destroyerButton").style.visibility = "visible";
+      }
+      if (
+        cruiserPlaced &&
+        submarinePlaced &&
+        carrierPlaced &&
+        destroyerPlaced
+      ) {
+        document.getElementById("attackButton").style.visibility = "visible";
       }
     }
     //idia diadikasia me to carrier apla gia to destroyer
@@ -403,6 +420,14 @@ function placeShipOnBoard(e) {
       }
       if (!cruiserPlaced) {
         document.getElementById("cruiserButton").style.visibility = "visible";
+      }
+      if (
+        cruiserPlaced &&
+        submarinePlaced &&
+        carrierPlaced &&
+        destroyerPlaced
+      ) {
+        document.getElementById("attackButton").style.visibility = "visible";
       }
     }
     //idia diadikasia me to carrier apla gia to submarine
@@ -528,6 +553,14 @@ function placeShipOnBoard(e) {
       if (!cruiserPlaced) {
         document.getElementById("cruiserButton").style.visibility = "visible";
       }
+      if (
+        cruiserPlaced &&
+        submarinePlaced &&
+        carrierPlaced &&
+        destroyerPlaced
+      ) {
+        document.getElementById("attackButton").style.visibility = "visible";
+      }
     }
   }
 }
@@ -536,11 +569,16 @@ function placeShipOnBoard(e) {
 function attackOnBoard(e) {
   e = e || window.event;
   e = e.target || e.srcElement;
-  if (carrierPlaced && cruiserCells && submarinePlaced && destroyerPlaced) {
+  if (attackIsOn) {
     alert("Attackin on : " + e.id);
+    attackIsOn = false;
   } else {
-    alert("You cannot attack before placing every ship");
+    alert("You have not selected to attack!");
   }
+}
+
+function attack() {
+  attackIsOn = true;
 }
 
 //JSON antikeimeno

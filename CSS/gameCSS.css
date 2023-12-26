@@ -56,7 +56,8 @@ td:hover {
 #carrierButton,
 #cruiserButton,
 #submarineButton,
-#destroyerButton {
+#destroyerButton,
+#attackButton {
   visibility: hidden;
 }
 
