@@ -86,14 +86,20 @@ function showSignupForm() {
     cancelSignUp();
 }
 
+function generateHex(size) {
+    return [...Array(size)].map(() => Math.floor(Math.random() * 16).toString(16)).join('');
+}
+
 
 function logIn() {
     var username = document.getElementById("loginUsername").value;
     var password = document.getElementById("loginPassword").value;
+    var token = generateHex();
 
     var logInData = {
         playerUsername: username,
-        playerPassword: password
+        playerPassword: password,
+        playerToken: token
     };
 
     $.ajax({
@@ -105,9 +111,10 @@ function logIn() {
         success: function (response) {
             if (response.status === 'success') {
                 alert(response.message);
+                alert("Session ID: " + response.sessionID); // Display the session ID
                 document.getElementById("loginForm").style.display = 'none';
                 document.getElementById("logInQuestion").style.display = "none";
-                window.location.href = 'HTML/kanones.html';
+                window.location.href = 'HTML/game.html';
             } else {
                 console.error("Unexpected success response:", response);
             }

@@ -1,10 +1,13 @@
 <?php
 header('Content-Type: application/json');
 
-global $mysqli;
-
 session_start();
-$session_id = session_id();
+
+
+
+
+global $mysqli;
+$session_id = session_create_id();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include 'dbconnect.php';
@@ -23,7 +26,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt->num_rows == 1 && password_verify($password, $hashedPassword)) {
         $_SESSION['login_user'] = $dbUsername;
+        $stmt = $mysqli->prepare("INSERT INTO naumaxiaDB.paiktes (etiketaPaikth, usernamePaikth, passwordPaikth) VALUES (?, ?, ?)");
         $response = array("status" => "success", "message" => "Η σύνδεση πραγματοποιήθηκε με επιτυχία!");
+
         
     } else {
         $response = array("status" => "error", "message" => "Λάθος όνομα χρήστη ή κωδικός πρόσβασης!");
