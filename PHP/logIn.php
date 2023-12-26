@@ -1,7 +1,8 @@
 <?php
-header('Content-Type: application/json');
 
 session_start();
+
+header('Content-Type: application/json');
 
 global $mysqli;
 
@@ -13,16 +14,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $logInData['playerUsername'];
     $password = $logInData['playerPassword'];
 
-    $stmt = $mysqli->prepare("SELECT usernamePaikth, passwordPaikth, idPaikth FROM naumaxiaDB.paiktes WHERE usernamePaikth = ?");
+    $stmt = $mysqli->prepare("SELECT * FROM naumaxiaDB.paiktes WHERE usernamePaikth = ?");
     $stmt->bind_param("s", $username);
     $stmt->execute();
     $stmt->store_result();
-    $stmt->bind_result($dbUsername, $hashedPassword,$idPaikth);
+    $stmt->bind_result($etiketaPaikth, $usernamePaikth,$passwordPaikth,$idPaikth);
     $stmt->fetch();
 
-    if ($stmt->num_rows == 1 && password_verify($password, $hashedPassword)) {
-        $_SESSION['login_user'] = $dbUsername;
+    if ($stmt->num_rows == 1 && password_verify($password, $passwordPaikth)) {
+        $_SESSION['user_etiketa'] = $etiketaPaikth;
+        $_SESSION['user_name'] = $usernamePaikth;
+        $_SESSION['user_password'] = $passwordPaikth;
         $_SESSION['user_id'] = $idPaikth;
+        
         $response = array("status" => "success", "message" => "Η σύνδεση πραγματοποιήθηκε με επιτυχία!", "user_id" => $_SESSION['user_id']);
     } else {
         $response = array("status" => "error", "message" => "Λάθος όνομα χρήστη ή κωδικός πρόσβασης!");
@@ -31,6 +35,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     echo json_encode($response);
     
     $stmt->close();
-    exit;
+        exit;
 }
 ?>

@@ -100,20 +100,17 @@ function logIn() {
         contentType: 'application/json',
         success: function (response) {
             if (response.status === 'success') {
-                var userId = response.user_id;
-                console.log(userId);
+                var userId = response.user_id.value;
+                console.log('User ID:', userId);
                 document.getElementById("loginForm").style.display = 'none';
                 document.getElementById("logInQuestion").style.display = "none";
                 window.location.href = 'HTML/game.html';
-                
             } else {
-                console.error("Unexpected success response:", response);
+                console.error("Login failed:", response.message);
             }
         },
         error: function (jqXHR) {
-            var errorMessage = "Σφάλμα: " + jqXHR.responseJSON.message;
-            console.log(errorMessage);
-            alert(errorMessage);
+            console.error("AJAX error:", jqXHR.responseJSON.message);
         }
     });
 }
