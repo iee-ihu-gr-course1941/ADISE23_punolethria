@@ -9,8 +9,8 @@
     />
     <script src="JQuery/jquery-3.7.1.js"></script>
     <link rel="stylesheet" href="CSS/indexCSS.css" />
-    <script src="JAVASCRIPT/main.js" defer></script>
     <script src="JAVASCRIPT/token.js"></script>
+    <script src="JAVASCRIPT/main.js" defer></script>
     <title>Ναυμαχία</title>
   </head>
   <body>
@@ -54,6 +54,14 @@
             required
           />
 
+          <div class="dropdown">
+            <select id="dropdownOptions">
+              <option value="" disabled selected>Επιλέξτε Ρόλο</option>
+              <option value="option1">friend</option>
+              <option value="option2">hostile</option>
+            </select>
+          </div>
+
           <div class="clearfix">
             <button id="cancelSignUpbt" type="button" class="cancelbtn">
               Cancel
@@ -87,7 +95,7 @@
             name="psw"
             required
           />
-
+          
           <button id="logInBtn" type="button">Login</button>
           <button id="cancelLoginbt" type="button" class="cancelbtn">
             Cancel

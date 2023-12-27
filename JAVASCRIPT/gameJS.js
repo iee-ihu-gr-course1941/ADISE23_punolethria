@@ -587,7 +587,7 @@ function goToRules() {
 }
 
 //JSON antikeimeno
-var data = {
+/*var data = {
   shipType: shipType,
   cellCords: cords,
 };
@@ -600,4 +600,4 @@ $.ajax({
   contentType: "application/json",
   success: signUpResult,
   error: signUpError,
-});
+});*/

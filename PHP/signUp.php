@@ -7,11 +7,7 @@ global $mysqli;
 
 $exists = false;
 
-function assignTag() {
-    $tags = array('friend', 'foe');
-    $randomIndex = array_rand($tags);
-    return $tags[$randomIndex];
-}
+
 
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -19,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $data = json_decode(file_get_contents('php://input'), true);
 
-    $playerTag = assignTag();
+    $playerTag = $data['playerTag'];
     $username = $data['playerUsername'];
     $password = $data['playerPassword'];
     $passwordRepeat = $data['playerPasswordRepeat'];

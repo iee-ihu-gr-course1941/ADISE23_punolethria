@@ -11,11 +11,26 @@ $(function () {
   cancelLoginButton.addEventListener("click", showSignupForm);
 });
 
+
+function selectedTag(){
+    var selectedValue = document.getElementById("dropdownOptions").value;
+
+        // Display the selected value (you can replace this with your own logic)
+        if (selectedValue === "option1") {
+            return "friend";
+        } else if (selectedValue === "option2") {
+            return "hostile";
+        }
+
+}
+
 function signUp() {
   var username = document.getElementById("signUpusername").value;
   var password = document.getElementById("signUpPassword").value;
   var passwordRepeat = document.getElementById("signUpPasswordRepeat").value;
-  var token = setToken();
+  var tagName = selectedTag();
+  setToken();
+  var token = getToken();
 
   if (username === "" || password === "" || passwordRepeat === "") {
     window.alert("Please fill in all fields.");
@@ -28,6 +43,7 @@ function signUp() {
 
   //JSON antikeimeno
   var signUpdata = {
+    playerTag: tagName,
     playerUsername: username,
     playerPassword: password,
     playerPasswordRepeat: passwordRepeat,
@@ -62,6 +78,7 @@ function signUp() {
   loginPassword.value = "";
 }
 
+
 function cancelSignUp() {
   var username = document.getElementById("signUpusername");
   var password = document.getElementById("signUpPassword");
@@ -83,7 +100,8 @@ function showSignupForm() {
 function logIn() {
   var username = document.getElementById("loginUsername").value;
   var password = document.getElementById("loginPassword").value;
-  var token = setToken();
+  setToken();
+  var token = getToken();
 
   var logInData = {
     playerUsername: username,
@@ -93,14 +111,12 @@ function logIn() {
 
   $.ajax({
     url: "PHP/logIn.php",
-    method: "POST",
+    method: "PUT",
     dataType: "json",
     data: JSON.stringify(logInData),
     contentType: "application/json",
     success: function (response) {
       if (response.status === "success") {
-        var userId = response.user_id.value;
-        console.log("User ID:", userId);
         document.getElementById("loginForm").style.display = "none";
         document.getElementById("logInQuestion").style.display = "none";
         window.location.href = "HTML/game.html";
