@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
     $stmt_verify->store_result();
 
     if ($stmt_verify->num_rows === 0) {
-        $response = array("status" => "error", "message" => "Invalid username or password");
+        $response = array("status" => "error", "message" => "Λάθος usernamne ή κωδικός!");
 
     } else {
         // Initialize $stmt_update outside the if block
