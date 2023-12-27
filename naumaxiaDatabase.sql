@@ -286,7 +286,7 @@ CREATE TABLE `paiktes` (
 	`etiketaPaikth` VARCHAR(20) NOT NULL COLLATE 'utf8mb3_bin',
 	`usernamePaikth` VARCHAR(20) NOT NULL DEFAULT 'Εισαγωγή username' COLLATE 'utf8mb3_bin',
 	`passwordPaikth` VARCHAR(100) NOT NULL DEFAULT '' COLLATE 'utf8mb3_bin',
-	`idPaikth` INT(11) NOT NULL AUTO_INCREMENT,
+	`idPaikth` VARCHAR(16) NOT NULL DEFAULT,
 	PRIMARY KEY (`idPaikth`) USING BTREE
 )
 -- Dumping data for table naumaxiaDatabase.paiktes: ~0 rows (approximately)

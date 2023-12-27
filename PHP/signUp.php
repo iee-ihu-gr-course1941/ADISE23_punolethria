@@ -23,6 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $data['playerUsername'];
     $password = $data['playerPassword'];
     $passwordRepeat = $data['playerPasswordRepeat'];
+    $token = $data['playerToken'];
 
     // Prepared Statement
     $stmt = $mysqli->prepare("SELECT * FROM paiktes WHERE usernamePaikth = ?");
@@ -41,8 +42,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $hash = password_hash($password, PASSWORD_DEFAULT);
 
             // Hashing
-            $stmt = $mysqli->prepare("INSERT INTO naumaxiaDB.paiktes (etiketaPaikth, usernamePaikth, passwordPaikth) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $playerTag, $username, $hash);
+            $stmt = $mysqli->prepare("INSERT INTO naumaxiaDB.paiktes (etiketaPaikth, usernamePaikth, passwordPaikth, idPaikth) VALUES (?, ?, ?, ?)");
+            $stmt->bind_param("ssss", $playerTag, $username, $hash, $token);
             $stmt->execute();
 
             if ($stmt->affected_rows > 0) {
