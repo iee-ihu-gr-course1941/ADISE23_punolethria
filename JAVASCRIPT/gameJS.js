@@ -4,7 +4,7 @@ $(function () {
 
   var logInButton = document.getElementById("logInBtn");
   var cancelLoginButton = document.getElementById("cancelLoginbt");
-  
+
   signUpButton.addEventListener("click", signUp);
   cancelSignUpButton.addEventListener("click", cancelSignUp);
   logInButton.addEventListener("click", logIn);
@@ -43,128 +43,125 @@ function setToken() {
 
 //start main.js
 
-function selectedTag(){
+function selectedTag() {
   var selectedValue = document.getElementById("dropdownOptions").value;
 
-      // Display the selected value (you can replace this with your own logic)
-      if (selectedValue === "option1") {
-          return "friend";
-      } else if (selectedValue === "option2") {
-          return "hostile";
-      }
-
+  // Display the selected value (you can replace this with your own logic)
+  if (selectedValue === "option1") {
+    return "friend";
+  } else if (selectedValue === "option2") {
+    return "hostile";
+  }
 }
 
 function signUp() {
-var username = document.getElementById("signUpusername").value;
-var password = document.getElementById("signUpPassword").value;
-var passwordRepeat = document.getElementById("signUpPasswordRepeat").value;
-var tagName = selectedTag();
-setToken();
+  var username = document.getElementById("signUpusername").value;
+  var password = document.getElementById("signUpPassword").value;
+  var passwordRepeat = document.getElementById("signUpPasswordRepeat").value;
+  var tagName = selectedTag();
+  setToken();
 
-if (username === "" || password === "" || passwordRepeat === "") {
-  window.alert("Please fill in all fields.");
-  return false;
+  if (username === "" || password === "" || passwordRepeat === "") {
+    window.alert("Please fill in all fields.");
+    return false;
+  }
+  if (password != passwordRepeat) {
+    window.alert("Passwords do not match!");
+    return false;
+  }
+
+  //JSON antikeimeno
+  var signUpdata = {
+    playerTag: tagName,
+    playerUsername: username,
+    playerPassword: password,
+    playerPasswordRepeat: passwordRepeat,
+    playerToken: token,
+  };
+
+  $.ajax({
+    url: "PHP/signUp.php",
+    method: "POST",
+    dataType: "json",
+    data: JSON.stringify(signUpdata),
+    contentType: "application/json",
+    success: function (response) {
+      successMessage = response.message;
+      alert(successMessage);
+
+      document.getElementById("signUpForm").style.display = "none";
+      document.getElementById("signInQuestion").style.display = "none";
+      document.getElementById("loginForm").style.display = "block";
+      document.getElementById("logInQuestion").style.display = "block";
+    },
+    error: function (response) {
+      successMessage = "Σφάλμα: " + response.message;
+      alert(successMessage);
+    },
+  });
+
+  var loginUsername = document.getElementById("loginUsername");
+  var loginPassword = document.getElementById("loginPassword");
+
+  loginUsername.value = "";
+  loginPassword.value = "";
 }
-if (password != passwordRepeat) {
-  window.alert("Passwords do not match!");
-  return false;
-}
-
-//JSON antikeimeno
-var signUpdata = {
-  playerTag: tagName,
-  playerUsername: username,
-  playerPassword: password,
-  playerPasswordRepeat: passwordRepeat,
-  playerToken: token,
-};
-
-$.ajax({
-  url: "PHP/signUp.php",
-  method: "POST",
-  dataType: "json",
-  data: JSON.stringify(signUpdata),
-  contentType: "application/json",
-  success: function (response) {
-    successMessage = response.message;
-    alert(successMessage);
-
-    document.getElementById("signUpForm").style.display = "none";
-    document.getElementById("signInQuestion").style.display = "none";
-    document.getElementById("loginForm").style.display = "block";
-    document.getElementById("logInQuestion").style.display = "block";
-  },
-  error: function (response) {
-    successMessage = "Σφάλμα: " + response.message;
-    alert(successMessage);
-  },
-});
-
-var loginUsername = document.getElementById("loginUsername");
-var loginPassword = document.getElementById("loginPassword");
-
-loginUsername.value = "";
-loginPassword.value = "";
-}
-
 
 function cancelSignUp() {
-var username = document.getElementById("signUpusername");
-var password = document.getElementById("signUpPassword");
-var passwordRepeat = document.getElementById("signUpPasswordRepeat");
+  var username = document.getElementById("signUpusername");
+  var password = document.getElementById("signUpPassword");
+  var passwordRepeat = document.getElementById("signUpPasswordRepeat");
 
-username.value = "";
-password.value = "";
-passwordRepeat.value = "";
+  username.value = "";
+  password.value = "";
+  passwordRepeat.value = "";
 }
 
 function showSignupForm() {
-document.getElementById("loginForm").style.display = "none";
-document.getElementById("signUpForm").style.display = "block";
-document.getElementById("signInQuestion").style.display = "block";
-document.getElementById("logInQuestion").style.display = "none";
-cancelSignUp();
+  document.getElementById("loginForm").style.display = "none";
+  document.getElementById("signUpForm").style.display = "block";
+  document.getElementById("signInQuestion").style.display = "block";
+  document.getElementById("logInQuestion").style.display = "none";
+  cancelSignUp();
 }
 
 function logIn() {
-var username = document.getElementById("loginUsername").value;
-var password = document.getElementById("loginPassword").value;
-setToken();
-window.sessionStorage.setItem("token", token)
-alert(token);
-var logInData = {
-  playerUsername: username,
-  playerPassword: password,
-  playerToken: token,
-};
+  var username = document.getElementById("loginUsername").value;
+  var password = document.getElementById("loginPassword").value;
+  setToken();
+  window.sessionStorage.setItem("token", token);
+  var logInData = {
+    playerUsername: username,
+    playerPassword: password,
+    playerToken: token,
+  };
 
-$.ajax({
-  url: "PHP/logIn.php",
-  method: "PUT",
-  dataType: "json",
-  data: JSON.stringify(logInData),
-  contentType: "application/json",
-  success: function (response) {
-    if (response.status === "success") {
-      document.getElementById("loginForm").style.display = "none";
-      document.getElementById("logInQuestion").style.display = "none";
-      window.location.href = "HTML/game.html";
-    } else {
-      console.error("Login failed:", response.message);
-    }
-  },
-  error: function (jqXHR) {
-    console.error("AJAX error:", jqXHR.responseJSON.message);
-  },
-});
+  $.ajax({
+    url: "PHP/logIn.php",
+    method: "PUT",
+    dataType: "json",
+    data: JSON.stringify(logInData),
+    contentType: "application/json",
+    success: function (response) {
+      if (response.status === "success") {
+        document.getElementById("loginForm").style.display = "none";
+        document.getElementById("logInQuestion").style.display = "none";
+        window.location.href = "HTML/game.html";
+      } else {
+        console.error("Login failed:", response.message);
+      }
+    },
+    error: function (jqXHR) {
+      console.error("AJAX error:", jqXHR.responseJSON.message);
+    },
+  });
 }
 
 function showLogInForm() {
-document.getElementById("signUpForm").style.display = "none";
-document.getElementById("loginForm").style.display = "block";
-document.getElementById("signInQuestion").style.display = "none";
-document.getElementById("logInQuestion").style.display = "block";
+  document.getElementById("signUpForm").style.display = "none";
+  document.getElementById("loginForm").style.display = "block";
+  document.getElementById("signInQuestion").style.display = "none";
+  document.getElementById("logInQuestion").style.display = "block";
 }
 
 //end of main.js
@@ -746,8 +743,24 @@ function placeShipOnBoard(e) {
 function attackOnBoard(e) {
   e = e || window.event;
   e = e.target || e.srcElement;
+  id = e.id;
+  cords = String(id).split(",");
+  x = parseInt(cords[0]);
+  y = parseInt(cords[1]);
+
   if (attackIsOn) {
     alert("Attackin on : " + e.id);
+
+    result = attackShip(x, y);
+    if (result == 1) {
+      document.getElementById(id).style.backgroundColor = "#8b0000";
+      alert("YOU GOT A HIT ON ENEMY SHIP!!");
+    } else {
+      document.getElementById(id).style.backgroundColor = "#000080";
+      alert("Unfortunetly you missed");
+    }
+    document.getElementById(id).removeEventListener("click", attackOnBoard);
+
     attackIsOn = false;
   } else {
     alert("You have not selected to attack!");
@@ -763,8 +776,6 @@ function goToRules() {
 }
 
 function placeShipOnBoardDb(x, y) {
-  alert(token);
-
   x = parseInt(x);
   y = parseInt(y);
 
@@ -793,7 +804,6 @@ function placeShipOnBoardDb(x, y) {
 }
 
 function attackShip(x, y) {
-  
   //JSON antikeimeno
   var attackShipData = {
     grammh: x,
@@ -803,13 +813,12 @@ function attackShip(x, y) {
 
   $.ajax({
     url: "PHP/attackShip.php",
-    method: "PUT",
+    method: "GET",
     dataType: "json",
     data: JSON.stringify(attackShipData),
     contentType: "application/json",
-    success: function (response) {
-      successMessage = response.message;
-      alert(successMessage);
+    success: function (content) {
+      return content;
     },
     error: function (response) {
       successMessage = "Σφάλμα: " + response.message;

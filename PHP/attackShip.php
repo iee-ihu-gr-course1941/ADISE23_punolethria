@@ -23,25 +23,22 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
 
     } else {
         if(strcmp($stmt_verify,"friendly")==0){
-            $stmt_select = $mysqli->prepare("SELECT naumaxiaDB.friendlyboard WHERE grammh = ?, sthlh = ? ");
+            $stmt_select = $mysqli->prepare("SELECT content FROM naumaxiaDB.foeboard WHERE grammh = ?, sthlh = ? ");
             $stmt_select->bind_param("ss", $grammh, $sthlh);
             $stmt_select->execute();
+            $stmt_select->store_result();
+            $stmt_select->bind_result($content);
+            $stmt_select->fetch();
+            echo $content
         }
         else{
-            $stmt_select = $mysqli->prepare("SELECT naumaxiaDB.foeboard WHERE grammh = ?, sthlh = ? ");
+            $stmt_select = $mysqli->prepare("SELECT content FROM naumaxiaDB.friendlyboard WHERE grammh = ?, sthlh = ? ");
             $stmt_select->bind_param("ss", $grammh, $sthlh);
             $stmt_select->execute();
-        }
-        if ($stmt_select->affected_rows > 0) {
-            $response = array("status" => "success", "message" => "Update successful");
-            $stmt_verify->close();
-            $stmt_select->close();
-        } else {
-            $response = array("status" => "error", "message" => "Update failed");
         }
     }
 
-    echo json_encode($response);
+    echo json_encode($content);
 
     // Close both statements
 }
