@@ -154,6 +154,7 @@ function placeShipOnBoard(e) {
           //To if/else xreiazetai dioti mporei o xrhsths na epeleje ta kelia apo dejia pros ta aristera h anapoda
           if (y1 - y2 == 4) {
             for (let ind = y1; ind >= y2; ind--) {
+              placeShipOnBoard(x1, ind);
               console.log("Y1:" + y1 + " Y2:" + y2);
               //Afaireitai o EventListener wste o xrhsths na mhn mporei na pathsei kelia sta opoia einai topo8ethmeno hsh ploio kai meta bafontai gri
               let string_index = String(x1 + "," + ind);
@@ -166,6 +167,7 @@ function placeShipOnBoard(e) {
             }
           } else {
             for (let ind = y1; ind <= y2; ind++) {
+              placeShipOnBoard(x1, ind);
               let string_index = String(x1 + "," + ind);
               document
                 .getElementById(string_index)
@@ -188,6 +190,7 @@ function placeShipOnBoard(e) {
           document.getElementById("carrierButton").style.visibility = "hidden";
           if (x1 - x2 == 4) {
             for (let ind = x1; ind >= x2; ind--) {
+              placeShipOnBoard(ind, y1);
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
@@ -198,6 +201,7 @@ function placeShipOnBoard(e) {
             }
           } else {
             for (let ind = x1; ind <= x2; ind++) {
+              placeShipOnBoard(ind, y1);
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
@@ -256,6 +260,8 @@ function placeShipOnBoard(e) {
 
           if (y1 - y2 == 2) {
             for (let ind = y1; ind >= y2; ind--) {
+              placeShipOnBoard(x1, ind);
+
               let string_index = String(x1 + "," + ind);
               document
                 .getElementById(string_index)
@@ -266,6 +272,8 @@ function placeShipOnBoard(e) {
             }
           } else {
             for (let ind = y1; ind <= y2; ind++) {
+              placeShipOnBoard(x1, ind);
+
               let string_index = String(x1 + "," + ind);
               document
                 .getElementById(string_index)
@@ -286,6 +294,7 @@ function placeShipOnBoard(e) {
           document.getElementById("cruiserButton").style.visibility = "hidden";
           if (x1 - x2 == 2) {
             for (let ind = x1; ind >= x2; ind--) {
+              placeShipOnBoard(ind, y1);
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
@@ -296,6 +305,7 @@ function placeShipOnBoard(e) {
             }
           } else {
             for (let ind = x1; ind <= x2; ind++) {
+              placeShipOnBoard(ind, y1);
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
@@ -354,6 +364,8 @@ function placeShipOnBoard(e) {
 
           if (y1 - y2 == 3) {
             for (let ind = y1; ind >= y2; ind--) {
+              placeShipOnBoard(x1, ind);
+
               console.log("Eimai edw");
               let string_index = String(x1 + "," + ind);
               document
@@ -365,6 +377,8 @@ function placeShipOnBoard(e) {
             }
           } else {
             for (let ind = y1; ind <= y2; ind++) {
+              placeShipOnBoard(x1, ind);
+
               let string_index = String(x1 + "," + ind);
               document
                 .getElementById(string_index)
@@ -386,6 +400,7 @@ function placeShipOnBoard(e) {
             "hidden";
           if (x1 - x2 == 3) {
             for (let ind = x1; ind >= x2; ind--) {
+              placeShipOnBoard(ind, y1);
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
@@ -396,6 +411,7 @@ function placeShipOnBoard(e) {
             }
           } else {
             for (let ind = x1; ind <= x2; ind++) {
+              placeShipOnBoard(ind, y1);
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
@@ -450,6 +466,8 @@ function placeShipOnBoard(e) {
           counter = counter + 1;
           if (y1 - y2 == 1) {
             for (let ind = y1; ind >= y2; ind--) {
+              placeShipOnBoard(x1, ind);
+
               let string_index = String(x1 + "," + ind);
               document
                 .getElementById(string_index)
@@ -460,6 +478,8 @@ function placeShipOnBoard(e) {
             }
           } else {
             for (let ind = y1; ind <= y2; ind++) {
+              placeShipOnBoard(x1, ind);
+
               let string_index = String(x1 + "," + ind);
               document
                 .getElementById(string_index)
@@ -499,6 +519,7 @@ function placeShipOnBoard(e) {
           counter = counter + 1;
           if (x1 - x2 == 1) {
             for (let ind = x1; ind >= x2; ind--) {
+              placeShipOnBoard(ind, y1);
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
@@ -509,6 +530,7 @@ function placeShipOnBoard(e) {
             }
           } else {
             for (let ind = x1; ind <= x2; ind++) {
+              placeShipOnBoard(ind, y1);
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
@@ -586,18 +608,56 @@ function goToRules() {
   window.open("./kanones.html");
 }
 
-//JSON antikeimeno
-/*var data = {
-  shipType: shipType,
-  cellCords: cords,
-};
+function placeShipOnBoard(x, y) {
+  var token = getToken();
 
-$.ajax({
-  url: "PHP/game.php",
-  method: "POST",
-  datatype: "json",
-  data: JSON.stringify(data),
-  contentType: "application/json",
-  success: signUpResult,
-  error: signUpError,
-});*/
+  //JSON antikeimeno
+  var placeShipData = {
+    grammh: x,
+    sthlh: y,
+    id: token,
+  };
+
+  $.ajax({
+    url: "PHP/placeShipOnBoard.php",
+    method: "PUT",
+    dataType: "json",
+    data: JSON.stringify(placeShipData),
+    contentType: "application/json",
+    success: function (response) {
+      successMessage = response.message;
+      alert(successMessage);
+    },
+    error: function (response) {
+      successMessage = "Σφάλμα: " + response.message;
+      alert(successMessage);
+    },
+  });
+}
+
+function attackShip(x, y) {
+  var token = getToken();
+
+  //JSON antikeimeno
+  var attackShipData = {
+    grammh: x,
+    sthlh: y,
+    id: token,
+  };
+
+  $.ajax({
+    url: "PHP/attackShip.php",
+    method: "PUT",
+    dataType: "json",
+    data: JSON.stringify(attackShipData),
+    contentType: "application/json",
+    success: function (response) {
+      successMessage = response.message;
+      alert(successMessage);
+    },
+    error: function (response) {
+      successMessage = "Σφάλμα: " + response.message;
+      alert(successMessage);
+    },
+  });
+}

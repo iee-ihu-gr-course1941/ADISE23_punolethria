@@ -24,10 +24,6 @@ body {
   position: fixed;
   top: 20%;
   left: 50%;
-  color: white;
-  font-size: 25px;
-  font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
-  text-decoration: underline;
   transform: translate(-50%, 50%);
 }
 #boardL {
@@ -84,6 +80,7 @@ td:hover {
   line-height: 1;
   list-style: none;
   overflow: hidden;
+  margin-left: 10px;
   padding-left: 16px;
   padding-right: 16px;
   position: relative;
@@ -112,4 +109,10 @@ td:hover {
 .button-29:active {
   box-shadow: #3c4fe0 0 3px 7px inset;
   transform: translateY(2px);
+}
+
+.title {
+  font-size: 60px;
+  font-family: Andale Mono, monospace;
+  letter-spacing: 15px;
 }
