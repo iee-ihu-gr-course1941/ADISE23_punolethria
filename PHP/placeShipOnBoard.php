@@ -4,7 +4,7 @@ header('Content-Type: application/json');
 
 global $mysqli, $stmt_update;
 
-if ($_SERVER["REQUEST_METHOD"] == "PUT") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include 'dbconnect.php';
 
     $placeShipData = json_decode(file_get_contents('php://input'), true);
@@ -17,18 +17,18 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
     $stmt_verify->bind_param("s", $token);
     $stmt_verify->execute();
     $stmt_verify->store_result();
+    $stmt_verify->bind_result($etiketaPaikth); // Fetch the result
+    $stmt_verify->fetch();
 
     if ($stmt_verify->num_rows === 0) {
         $response = array("status" => "error", "message" => "Κάτι δεν πήγε καλά!");
-
     } else {
-        if(strcmp($stmt_verify,"friendly")==0){
-            $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.friendlyboard SET grammh = 1, sthlh = 1 WHERE ");
+        if(strcmp($etiketaPaikth, "friendly") == 0){
+            $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.friendlyboard SET content = 1 WHERE grammh = ? AND sthlh = ? ");
             $stmt_update->bind_param("ss", $grammh, $sthlh);
             $stmt_update->execute();
-        }
-        else{
-            $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.foeboard SET grammh = ?, sthlh = ? ");
+        } else {
+            $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.foeboard SET content = 1 WHERE grammh = ? AND sthlh = ? ");
             $stmt_update->bind_param("ss", $grammh, $sthlh);
             $stmt_update->execute();
         }

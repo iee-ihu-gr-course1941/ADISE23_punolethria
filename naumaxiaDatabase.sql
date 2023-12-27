@@ -137,7 +137,7 @@ INSERT INTO `foeboard` (`grammh`, `sthlh`, `content`) VALUES
 (9, 6, NULL),
 (9, 7, NULL),
 (9, 8, NULL),
-(9, 9, NULL),
+(9, 9, NULL);
 
 -- Dumping structure for table naumaxiaDatabase.foeboats
 CREATE TABLE IF NOT EXISTS `foeboats` (

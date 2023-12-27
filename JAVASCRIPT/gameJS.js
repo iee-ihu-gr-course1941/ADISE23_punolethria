@@ -776,8 +776,8 @@ function placeShipOnBoardDb(x, y) {
   };
 
   $.ajax({
-    url: "PHP/placeShipOnBoard.php",
-    method: "PUT",
+    url: "../PHP/placeShipOnBoard.php",
+    method: "POST",
     dataType: "json",
     data: JSON.stringify(placeShipData),
     contentType: "application/json",
