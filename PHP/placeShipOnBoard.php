@@ -9,8 +9,8 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
 
     $placeShipData = json_decode(file_get_contents('php://input'), true);
 
-    $sthlh = $placeShipData['playerUsername'];
-    $grammh = $placeShipData['playerPassword'];
+    $sthlh = $placeShipData['sthlh'];
+    $grammh = $placeShipData['grammh'];
     $token = $placeShipData['id'];
 
     $stmt_verify = $mysqli->prepare("SELECT etiketaPaikth FROM naumaxiaDB.paiktes WHERE idPaikth = ? ");
@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "PUT") {
 
     } else {
         if(strcmp($stmt_verify,"friendly")==0){
-            $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.friendlyboard SET grammh = ?, sthlh = ? ");
+            $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.friendlyboard SET grammh = 1, sthlh = 1 WHERE ");
             $stmt_update->bind_param("ss", $grammh, $sthlh);
             $stmt_update->execute();
         }

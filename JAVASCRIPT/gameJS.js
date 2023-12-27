@@ -1,4 +1,18 @@
+$(function () {
+  var signUpButton = document.getElementById("signUpbt");
+  var cancelSignUpButton = document.getElementById("cancelSignUpbt");
+
+  var logInButton = document.getElementById("logInBtn");
+  var cancelLoginButton = document.getElementById("cancelLoginbt");
+  
+  signUpButton.addEventListener("click", signUp);
+  cancelSignUpButton.addEventListener("click", cancelSignUp);
+  logInButton.addEventListener("click", logIn);
+  cancelLoginButton.addEventListener("click", showSignupForm);
+});
+
 {
+  var token;
   var isCarrier = false;
   var isSubmarine = false;
   var isDestroyer = false;
@@ -16,8 +30,148 @@
   var counter = 0;
 }
 
+function setToken() {
+  const characters =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
+  var counter = 0;
+  token = "";
+  while (counter < 16) {
+    token += characters.charAt(Math.floor(Math.random() * 62));
+    counter += 1;
+  }
+}
+
+//start main.js
+
+function selectedTag(){
+  var selectedValue = document.getElementById("dropdownOptions").value;
+
+      // Display the selected value (you can replace this with your own logic)
+      if (selectedValue === "option1") {
+          return "friend";
+      } else if (selectedValue === "option2") {
+          return "hostile";
+      }
+
+}
+
+function signUp() {
+var username = document.getElementById("signUpusername").value;
+var password = document.getElementById("signUpPassword").value;
+var passwordRepeat = document.getElementById("signUpPasswordRepeat").value;
+var tagName = selectedTag();
+setToken();
+
+if (username === "" || password === "" || passwordRepeat === "") {
+  window.alert("Please fill in all fields.");
+  return false;
+}
+if (password != passwordRepeat) {
+  window.alert("Passwords do not match!");
+  return false;
+}
+
+//JSON antikeimeno
+var signUpdata = {
+  playerTag: tagName,
+  playerUsername: username,
+  playerPassword: password,
+  playerPasswordRepeat: passwordRepeat,
+  playerToken: token,
+};
+
+$.ajax({
+  url: "PHP/signUp.php",
+  method: "POST",
+  dataType: "json",
+  data: JSON.stringify(signUpdata),
+  contentType: "application/json",
+  success: function (response) {
+    successMessage = response.message;
+    alert(successMessage);
+
+    document.getElementById("signUpForm").style.display = "none";
+    document.getElementById("signInQuestion").style.display = "none";
+    document.getElementById("loginForm").style.display = "block";
+    document.getElementById("logInQuestion").style.display = "block";
+  },
+  error: function (response) {
+    successMessage = "Σφάλμα: " + response.message;
+    alert(successMessage);
+  },
+});
+
+var loginUsername = document.getElementById("loginUsername");
+var loginPassword = document.getElementById("loginPassword");
+
+loginUsername.value = "";
+loginPassword.value = "";
+}
+
+
+function cancelSignUp() {
+var username = document.getElementById("signUpusername");
+var password = document.getElementById("signUpPassword");
+var passwordRepeat = document.getElementById("signUpPasswordRepeat");
+
+username.value = "";
+password.value = "";
+passwordRepeat.value = "";
+}
+
+function showSignupForm() {
+document.getElementById("loginForm").style.display = "none";
+document.getElementById("signUpForm").style.display = "block";
+document.getElementById("signInQuestion").style.display = "block";
+document.getElementById("logInQuestion").style.display = "none";
+cancelSignUp();
+}
+
+function logIn() {
+var username = document.getElementById("loginUsername").value;
+var password = document.getElementById("loginPassword").value;
+setToken();
+window.sessionStorage.setItem("token", token)
+alert(token);
+var logInData = {
+  playerUsername: username,
+  playerPassword: password,
+  playerToken: token,
+};
+
+$.ajax({
+  url: "PHP/logIn.php",
+  method: "PUT",
+  dataType: "json",
+  data: JSON.stringify(logInData),
+  contentType: "application/json",
+  success: function (response) {
+    if (response.status === "success") {
+      document.getElementById("loginForm").style.display = "none";
+      document.getElementById("logInQuestion").style.display = "none";
+      window.location.href = "HTML/game.html";
+    } else {
+      console.error("Login failed:", response.message);
+    }
+  },
+  error: function (jqXHR) {
+    console.error("AJAX error:", jqXHR.responseJSON.message);
+  },
+});
+}
+
+function showLogInForm() {
+document.getElementById("signUpForm").style.display = "none";
+document.getElementById("loginForm").style.display = "block";
+document.getElementById("signInQuestion").style.display = "none";
+document.getElementById("logInQuestion").style.display = "block";
+}
+
+//end of main.js
+
 //Synarthsh pou dhmiourgei tous pinakes
 function initiateBoards() {
+  token = window.sessionStorage.getItem("token");
   document.getElementById("startGameButton").style.visibility = "hidden";
   document.getElementById("carrierButton").style.visibility = "visible";
   document.getElementById("cruiserButton").style.visibility = "visible";
@@ -154,7 +308,7 @@ function placeShipOnBoard(e) {
           //To if/else xreiazetai dioti mporei o xrhsths na epeleje ta kelia apo dejia pros ta aristera h anapoda
           if (y1 - y2 == 4) {
             for (let ind = y1; ind >= y2; ind--) {
-              placeShipOnBoard(x1, ind);
+              placeShipOnBoardDb(x1, ind);
               console.log("Y1:" + y1 + " Y2:" + y2);
               //Afaireitai o EventListener wste o xrhsths na mhn mporei na pathsei kelia sta opoia einai topo8ethmeno hsh ploio kai meta bafontai gri
               let string_index = String(x1 + "," + ind);
@@ -167,7 +321,7 @@ function placeShipOnBoard(e) {
             }
           } else {
             for (let ind = y1; ind <= y2; ind++) {
-              placeShipOnBoard(x1, ind);
+              placeShipOnBoardDb(x1, ind);
               let string_index = String(x1 + "," + ind);
               document
                 .getElementById(string_index)
@@ -190,7 +344,7 @@ function placeShipOnBoard(e) {
           document.getElementById("carrierButton").style.visibility = "hidden";
           if (x1 - x2 == 4) {
             for (let ind = x1; ind >= x2; ind--) {
-              placeShipOnBoard(ind, y1);
+              placeShipOnBoardDb(ind, y1);
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
@@ -201,7 +355,7 @@ function placeShipOnBoard(e) {
             }
           } else {
             for (let ind = x1; ind <= x2; ind++) {
-              placeShipOnBoard(ind, y1);
+              placeShipOnBoardDb(ind, y1);
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
@@ -260,7 +414,7 @@ function placeShipOnBoard(e) {
 
           if (y1 - y2 == 2) {
             for (let ind = y1; ind >= y2; ind--) {
-              placeShipOnBoard(x1, ind);
+              placeShipOnBoardDb(x1, ind);
 
               let string_index = String(x1 + "," + ind);
               document
@@ -272,7 +426,7 @@ function placeShipOnBoard(e) {
             }
           } else {
             for (let ind = y1; ind <= y2; ind++) {
-              placeShipOnBoard(x1, ind);
+              placeShipOnBoardDb(x1, ind);
 
               let string_index = String(x1 + "," + ind);
               document
@@ -294,7 +448,7 @@ function placeShipOnBoard(e) {
           document.getElementById("cruiserButton").style.visibility = "hidden";
           if (x1 - x2 == 2) {
             for (let ind = x1; ind >= x2; ind--) {
-              placeShipOnBoard(ind, y1);
+              placeShipOnBoardDb(ind, y1);
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
@@ -305,7 +459,7 @@ function placeShipOnBoard(e) {
             }
           } else {
             for (let ind = x1; ind <= x2; ind++) {
-              placeShipOnBoard(ind, y1);
+              placeShipOnBoardDb(ind, y1);
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
@@ -364,7 +518,7 @@ function placeShipOnBoard(e) {
 
           if (y1 - y2 == 3) {
             for (let ind = y1; ind >= y2; ind--) {
-              placeShipOnBoard(x1, ind);
+              placeShipOnBoardDb(x1, ind);
 
               console.log("Eimai edw");
               let string_index = String(x1 + "," + ind);
@@ -377,7 +531,7 @@ function placeShipOnBoard(e) {
             }
           } else {
             for (let ind = y1; ind <= y2; ind++) {
-              placeShipOnBoard(x1, ind);
+              placeShipOnBoardDb(x1, ind);
 
               let string_index = String(x1 + "," + ind);
               document
@@ -400,7 +554,7 @@ function placeShipOnBoard(e) {
             "hidden";
           if (x1 - x2 == 3) {
             for (let ind = x1; ind >= x2; ind--) {
-              placeShipOnBoard(ind, y1);
+              placeShipOnBoardDb(ind, y1);
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
@@ -411,7 +565,7 @@ function placeShipOnBoard(e) {
             }
           } else {
             for (let ind = x1; ind <= x2; ind++) {
-              placeShipOnBoard(ind, y1);
+              placeShipOnBoardDb(ind, y1);
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
@@ -466,7 +620,7 @@ function placeShipOnBoard(e) {
           counter = counter + 1;
           if (y1 - y2 == 1) {
             for (let ind = y1; ind >= y2; ind--) {
-              placeShipOnBoard(x1, ind);
+              placeShipOnBoardDb(x1, ind);
 
               let string_index = String(x1 + "," + ind);
               document
@@ -478,7 +632,7 @@ function placeShipOnBoard(e) {
             }
           } else {
             for (let ind = y1; ind <= y2; ind++) {
-              placeShipOnBoard(x1, ind);
+              placeShipOnBoardDb(x1, ind);
 
               let string_index = String(x1 + "," + ind);
               document
@@ -519,7 +673,7 @@ function placeShipOnBoard(e) {
           counter = counter + 1;
           if (x1 - x2 == 1) {
             for (let ind = x1; ind >= x2; ind--) {
-              placeShipOnBoard(ind, y1);
+              placeShipOnBoardDb(ind, y1);
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
@@ -530,7 +684,7 @@ function placeShipOnBoard(e) {
             }
           } else {
             for (let ind = x1; ind <= x2; ind++) {
-              placeShipOnBoard(ind, y1);
+              placeShipOnBoardDb(ind, y1);
               let string_index = String(ind + "," + y1);
               document
                 .getElementById(string_index)
@@ -608,8 +762,11 @@ function goToRules() {
   window.open("./kanones.html");
 }
 
-function placeShipOnBoard(x, y) {
-  var token = getToken();
+function placeShipOnBoardDb(x, y) {
+  alert(token);
+
+  x = parseInt(x);
+  y = parseInt(y);
 
   //JSON antikeimeno
   var placeShipData = {
@@ -636,8 +793,7 @@ function placeShipOnBoard(x, y) {
 }
 
 function attackShip(x, y) {
-  var token = getToken();
-
+  
   //JSON antikeimeno
   var attackShipData = {
     grammh: x,
