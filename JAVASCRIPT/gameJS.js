@@ -769,11 +769,11 @@ function attackOnBoard(e) {
   cords = String(id).split(",");
   x = parseInt(cords[1]);
   y = parseInt(cords[2]);
-
   if (attackIsOn) {
     alert("Attackin on : " + e.id);
 
-    result = attackShip(x, y);
+    attackShip(x, y, function(result){alert(result);});
+    //alert(result);
     if (result == 1) {
       document.getElementById(id).style.backgroundColor = "#8b0000";
       alert("YOU GOT A HIT ON ENEMY SHIP!!");
@@ -816,7 +816,7 @@ function placeShipOnBoardDb(x, y) {
     contentType: "application/json",
     success: function (response) {
       successMessage = response.message;
-      alert(successMessage);
+      //alert(successMessage);
     },
     error: function (response) {
       successMessage = "Σφάλμα: " + response.message;
@@ -825,7 +825,8 @@ function placeShipOnBoardDb(x, y) {
   });
 }
 
-function attackShip(x, y) {
+function attackShip(x, y,callback) {
+  token = window.sessionStorage.getItem("token");
   //JSON antikeimeno
   var attackShipData = {
     grammh: x,
@@ -839,8 +840,9 @@ function attackShip(x, y) {
     dataType: "json",
     data: JSON.stringify(attackShipData),
     contentType: "application/json",
+    async: !1,
     success: function (content) {
-      return content;
+       callback(content);
     },
     error: function (response) {
       successMessage = "Σφάλμα: " + response.message;

@@ -23,13 +23,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt_verify->num_rows === 0) {
         $response = array("status" => "error", "message" => "Κάτι δεν πήγε καλά!");
     } else {
-        if(strcmp($etiketaPaikth, "friendly") == 0){
+        if(strcmp($etiketaPaikth, "friend") == 0){
             $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.friendlyboard SET content = 1 WHERE grammh = ? AND sthlh = ? ");
-            $stmt_update->bind_param("ss", $grammh, $sthlh);
+            $stmt_update->bind_param("ii", $grammh, $sthlh);
             $stmt_update->execute();
         } else {
             $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.foeboard SET content = 1 WHERE grammh = ? AND sthlh = ? ");
-            $stmt_update->bind_param("ss", $grammh, $sthlh);
+            $stmt_update->bind_param("ii", $grammh, $sthlh);
             $stmt_update->execute();
         }
         if ($stmt_update->affected_rows > 0) {
