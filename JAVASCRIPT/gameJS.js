@@ -219,7 +219,7 @@ function initiateBoards() {
 
     for (var j = 0; j < 10; j++) {
       var td = document.createElement("TD");
-      td.setAttribute("id", i + "," + j);
+      td.setAttribute("id", "enemy," + i + "," + j);
       td.addEventListener("click", attackOnBoard);
       td.width = "75";
       td.height = "25";
@@ -745,8 +745,8 @@ function attackOnBoard(e) {
   e = e.target || e.srcElement;
   id = e.id;
   cords = String(id).split(",");
-  x = parseInt(cords[0]);
-  y = parseInt(cords[1]);
+  x = parseInt(cords[1]);
+  y = parseInt(cords[2]);
 
   if (attackIsOn) {
     alert("Attackin on : " + e.id);
