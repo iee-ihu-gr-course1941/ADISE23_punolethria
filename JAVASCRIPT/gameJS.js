@@ -812,7 +812,7 @@ function attackShip(x, y) {
   };
 
   $.ajax({
-    url: "PHP/attackShip.php",
+    url: "../PHP/attackShip.php",
     method: "GET",
     dataType: "json",
     data: JSON.stringify(attackShipData),
