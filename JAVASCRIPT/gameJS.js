@@ -175,6 +175,28 @@ function initiateBoards() {
   document.getElementById("destroyerButton").style.visibility = "visible";
   document.getElementById("submarineButton").style.visibility = "visible";
   document.getElementById("rulesButton").style.visibility = "hidden";
+
+  //JSON antikeimeno
+  var resetBoardsData = {
+    id: token,
+  };
+
+  $.ajax({
+    url: "../PHP/resetBoards.php",
+    method: "POST",
+    dataType: "json",
+    data: JSON.stringify(resetBoardsData),
+    contentType: "application/json",
+    success: function (response) {
+      successMessage = response.message;
+      alert(successMessage);
+    },
+    error: function (response) {
+      successMessage = "Σφάλμα: " + response.message;
+      alert(successMessage);
+    },
+  });
+
   //Dhmioyrgeia tou pinaka topo8ethshs twn ploiwn
   var leftBoard = document.getElementById("boardL");
 
