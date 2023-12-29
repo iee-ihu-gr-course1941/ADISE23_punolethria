@@ -11,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
     $sthlh = $attackShipData['sthlh'];
     $grammh = $attackShipData['grammh'];
     $token = $attackShipData['id'];
+    
 
     $stmt_verify = $mysqli->prepare("SELECT etiketaPaikth FROM naumaxiaDB.paiktes WHERE idPaikth = ? ");
     $stmt_verify->bind_param("s", $token);
@@ -23,31 +24,30 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $response = array("status" => "error", "message" => "Κάτι δεν πήγε καλά!");
 
     } else {
-        
         if(strcmp($etiketaPaikth,"friend")==0){
-            $stmt_select = $mysqli->prepare("SELECT content FROM naumaxiaDB.foeboard WHERE grammh = ?, sthlh = ? ");
-            $stmt_select->bind_param("ii", $grammh, $sthlh);
-            $stmt_select->execute();
-            $stmt_select->store_result();
-            $stmt_select->bind_result($content);
-            $stmt_select->fetch();
-            echo $content;
-            $stmt_select->close();
+            $sql = 'select content from naumaxiaDB.foeboard where grammh=? and sthlh=?';
         }
         else{
-            $stmt_select = $mysqli->prepare("SELECT content FROM naumaxiaDB.friendlyboard WHERE grammh = ?, sthlh = ? "); 
-            $stmt_select = $mysqli->prepare("SELECT content FROM naumaxiaDB.foeboard WHERE grammh = ?, sthlh = ? ");
-            $stmt_select->bind_param("ii", $grammh, $sthlh);
-            $stmt_select->execute();
-            $stmt_select->store_result();
-            $stmt_select->bind_result($content);
-            $stmt_select->fetch();
-            echo $content;
-            $stmt_select->close();
+            $sql = 'select content from naumaxiaDB.friendlyboard where grammh=? and sthlh=?';
         }
+        $st = $mysqli->prepare($sql);
+        $st->bind_param('ii', $grammh,$sthlh);
+        $st->execute();
+        $res = $st->get_result();
+        $res->fetch_all(MYSQLI_ASSOC);
+        if($res == 1){
+            $attackShipData['content'] = 1;
+        }else{
+            $attackShipData['content'] = 0;
+        }
+        $modified_json_data = json_encode($attackShipData, JSON_PRETTY_PRINT);
+
+        echo $modified_json_data;
     }
+
+
     
-    
+
 
     // Close both statements
     $stmt_verify->close();

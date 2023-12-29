@@ -771,19 +771,7 @@ function attackOnBoard(e) {
   y = parseInt(cords[2]);
   if (attackIsOn) {
     alert("Attackin on : " + e.id);
-
-    attackShip(x, y, function(result){alert(result);});
-    //alert(result);
-    if (result == 1) {
-      document.getElementById(id).style.backgroundColor = "#8b0000";
-      alert("YOU GOT A HIT ON ENEMY SHIP!!");
-    } else {
-      document.getElementById(id).style.backgroundColor = "#000080";
-      alert("Unfortunetly you missed");
-    }
-    document.getElementById(id).removeEventListener("click", attackOnBoard);
-
-    attackIsOn = false;
+    attackShip(x, y);
   } else {
     alert("You have not selected to attack!");
   }
@@ -825,13 +813,14 @@ function placeShipOnBoardDb(x, y) {
   });
 }
 
-function attackShip(x, y,callback) {
+function attackShip(x, y) {
   token = window.sessionStorage.getItem("token");
   //JSON antikeimeno
   var attackShipData = {
     grammh: x,
     sthlh: y,
     id: token,
+    content: 0,
   };
 
   $.ajax({
@@ -842,11 +831,33 @@ function attackShip(x, y,callback) {
     contentType: "application/json",
     async: !1,
     success: function (content) {
-       callback(content);
+      attackResult;
     },
     error: function (response) {
       successMessage = "Σφάλμα: " + response.message;
       alert(successMessage);
     },
   });
+}
+
+function attackResult(data) {
+  attackOnBoardResult(data);
+}
+
+function attackOnBoardResult(data) {
+  attackData = data;
+  var x = attackData[0].grammh;
+  var y = attackData[0].sthlh;
+  var result = attackData[0].content;
+  id = "enemy," + String(x) + "," + String(y);
+  if (result == 1) {
+    document.getElementById(id).style.backgroundColor = "#8b0000";
+    alert("YOU GOT A HIT ON ENEMY SHIP!!");
+  } else {
+    document.getElementById(id).style.backgroundColor = "#000080";
+    alert("Unfortunetly you missed");
+  }
+  document.getElementById(id).removeEventListener("click", attackOnBoard);
+
+  attackIsOn = false;
 }
