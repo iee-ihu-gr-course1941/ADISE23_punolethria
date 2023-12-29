@@ -3,7 +3,7 @@
 header('Content-Type: application/json');
 
 global $mysqli,$stmt_verify,$stmt_select;
-if ($_SERVER["REQUEST_METHOD"] == "GET") {
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     include 'dbconnect.php';
     $message = "hello!";
     $attackShipData = json_decode(file_get_contents('php://input'), true);
@@ -34,8 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $st->bind_param('ii', $grammh,$sthlh);
         $st->execute();
         $res = $st->get_result();
-        $res->fetch_all(MYSQLI_ASSOC);
-        if($res == 1){
+        $result = $res->fetch_row();
+        if($result[0] == 1){
             $attackShipData['content'] = 1;
         }else{
             $attackShipData['content'] = 0;

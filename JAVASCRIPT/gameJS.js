@@ -825,14 +825,13 @@ function attackShip(x, y) {
 
   $.ajax({
     url: "../PHP/attackShip.php",
-    method: "GET",
+    method: "POST",
     dataType: "json",
     data: JSON.stringify(attackShipData),
     contentType: "application/json",
     async: !1,
-    success: function (content) {
-      attackResult;
-    },
+    success:
+    attackResult,
     error: function (response) {
       successMessage = "Σφάλμα: " + response.message;
       alert(successMessage);
@@ -846,9 +845,9 @@ function attackResult(data) {
 
 function attackOnBoardResult(data) {
   attackData = data;
-  var x = attackData[0].grammh;
-  var y = attackData[0].sthlh;
-  var result = attackData[0].content;
+  var x = attackData.grammh;
+  var y = attackData.sthlh;
+  var result = attackData.content;
   id = "enemy," + String(x) + "," + String(y);
   if (result == 1) {
     document.getElementById(id).style.backgroundColor = "#8b0000";

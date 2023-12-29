@@ -294,11 +294,16 @@ CREATE TABLE `paiktes` (
 -- Dumping data for table naumaxiaDatabase.paiktes: ~0 rows (approximately)
 
 -- Dumping structure for table naumaxiaDatabase.statuspaixnidiou
-CREATE TABLE IF NOT EXISTS `statuspaixnidiou` (
-  `status` enum('not active','initialized','active','ended','aborted') NOT NULL DEFAULT 'not active',
-  `result` enum('friendly','foe','draw') DEFAULT NULL,
-  `last_change` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin COMMENT='apothikeysh twn plhroforiwn tou paixnidiou';
+CREATE TABLE `statuspaixnidiou` (
+	`status` ENUM('not active','initialized','active','ended','aborted') NOT NULL DEFAULT 'not active' COLLATE 'utf8mb3_bin',
+	`result` ENUM('friendly','foe','draw') NULL DEFAULT NULL COLLATE 'utf8mb3_bin',
+	`last_change` TIMESTAMP NULL DEFAULT NULL,
+	`round` INT(11) NULL DEFAULT NULL
+)
+COMMENT='apothikeysh twn plhroforiwn tou paixnidiou'
+COLLATE='utf8mb3_bin'
+ENGINE=InnoDB
+;
 
 -- Dumping data for table naumaxiaDatabase.statuspaixnidiou: ~0 rows (approximately)
 
