@@ -1,3 +1,4 @@
+//Arxikopoihsh twn listeners
 $(function () {
   var signUpButton = document.getElementById("signUpbt");
   var cancelSignUpButton = document.getElementById("cancelSignUpbt");
@@ -11,6 +12,7 @@ $(function () {
   cancelLoginButton.addEventListener("click", showSignupForm);
 });
 
+//Global metavlhtes
 {
   var token;
   var isCarrier = false;
@@ -30,6 +32,7 @@ $(function () {
   var counter = 0;
 }
 
+//H synarthsh setToken() orizei ena monadiko tyxaio 16bit token gia na ginetai eykola to authentication tou ka8e xrhsth
 function setToken() {
   const characters =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890";
@@ -42,7 +45,7 @@ function setToken() {
 }
 
 //start main.js
-
+//Synarthsh pou ana8etei ta tags friendly kai hostile ston ka8e user
 function selectedTag() {
   var selectedValue = document.getElementById("dropdownOptions").value;
 
@@ -54,23 +57,26 @@ function selectedTag() {
   }
 }
 
+//H synarthsh ypey8ynh gia thn egrafh twn xrhstwn sthn bash
 function signUp() {
+  //apo8hkeysh tou input toy xrhsth se metavlhtes
   var username = document.getElementById("signUpusername").value;
   var password = document.getElementById("signUpPassword").value;
   var passwordRepeat = document.getElementById("signUpPasswordRepeat").value;
   var tagName = selectedTag();
+  //ana8esh token ston xrhsth pou ekane sign up
   setToken();
-
+  //elegxos gia kena username h password
   if (username === "" || password === "" || passwordRepeat === "") {
     window.alert("Please fill in all fields.");
     return false;
-  }
+  } //elegxos oti ta password einai idia
   if (password != passwordRepeat) {
     window.alert("Passwords do not match!");
     return false;
   }
 
-  //JSON antikeimeno
+  //Dhmhiourgia enos JSON antikeimeno
   var signUpdata = {
     playerTag: tagName,
     playerUsername: username,
@@ -79,6 +85,7 @@ function signUp() {
     playerToken: token,
   };
 
+  //klhsh Ajax gia eggrafh tou neou xrhsth sthn vash
   $.ajax({
     url: "PHP/signUp.php",
     method: "POST",
@@ -125,10 +132,14 @@ function showSignupForm() {
   cancelSignUp();
 }
 
+//Synarthsh syndeshs tou xrhsth me thn bash
 function logIn() {
+  //Apo8hkeysh tou input tou xrhsth se metavlhtes
   var username = document.getElementById("loginUsername").value;
   var password = document.getElementById("loginPassword").value;
+  //H ana8esh tou token ginetai ka8e fora pou kanei login o xrhsths ka8ws einai monadiko se ka8e session tou
   setToken();
+  //Apo8hkeysh tou token sto session storage wste na einai emfanes kai meta apo allagh sthn current selida
   window.sessionStorage.setItem("token", token);
   var logInData = {
     playerUsername: username,
@@ -136,6 +147,7 @@ function logIn() {
     playerToken: token,
   };
 
+  //Ajax gia syndesh me thn bash kai oristiko login tou xrhsth
   $.ajax({
     url: "PHP/logIn.php",
     method: "PUT",
@@ -146,6 +158,7 @@ function logIn() {
       if (response.status === "success") {
         document.getElementById("loginForm").style.display = "none";
         document.getElementById("logInQuestion").style.display = "none";
+        //an ola pane kala o xrhsths blepei thn game.html
         window.location.href = "HTML/game.html";
       } else {
         console.error("Login failed:", response.message);
@@ -155,6 +168,9 @@ function logIn() {
       console.error("AJAX error:", jqXHR.responseJSON.message);
     },
   });
+
+  //Enhmerwsh tou status tou paixnidiou
+  updateStatus;
 }
 
 function showLogInForm() {
@@ -168,7 +184,9 @@ function showLogInForm() {
 
 //Synarthsh pou dhmiourgei tous pinakes
 function initiateBoards() {
+  //apo8hkeysh toy token tou xrhsth (pou phre timh sto login) se topikh metavlhth
   token = window.sessionStorage.getItem("token");
+  //emfanish twn koumpiwn topo8ethshs ploiwn kai "svhsimo" twn enarji paixnidiou kai kanonwn
   document.getElementById("startGameButton").style.visibility = "hidden";
   document.getElementById("carrierButton").style.visibility = "visible";
   document.getElementById("cruiserButton").style.visibility = "visible";
@@ -176,11 +194,12 @@ function initiateBoards() {
   document.getElementById("submarineButton").style.visibility = "visible";
   document.getElementById("rulesButton").style.visibility = "hidden";
 
-  //JSON antikeimeno
+  //Dhmiourgeia JSON antikeimenou me to token
   var resetBoardsData = {
     id: token,
   };
 
+  //Reset tou board gia ton antistoixo xrhsth
   $.ajax({
     url: "../PHP/resetBoards.php",
     method: "POST",
@@ -189,11 +208,11 @@ function initiateBoards() {
     contentType: "application/json",
     success: function (response) {
       successMessage = response.message;
-      alert(successMessage);
+      console.log(successMessage);
     },
     error: function (response) {
       successMessage = "Σφάλμα: " + response.message;
-      alert(successMessage);
+      console.log(successMessage);
     },
   });
 
@@ -208,6 +227,7 @@ function initiateBoards() {
   tableBody.setAttribute("id", "friendlyBoard");
   table.appendChild(tableBody);
 
+  //dhmiourgia twn keliwn tou friendlyBoard me event listener gia topo8ethsh ploiwn
   for (var i = 0; i < 10; i++) {
     var tr = document.createElement("TR");
     tableBody.appendChild(tr);
@@ -235,6 +255,7 @@ function initiateBoards() {
   tableBody.setAttribute("id", "hostileBoard");
   table.appendChild(tableBody);
 
+  //dhmiourgia twn keliwn tou hostileBoard me event listener gia epi8esh sta ploia
   for (var i = 0; i < 10; i++) {
     var tr = document.createElement("TR");
     tableBody.appendChild(tr);
@@ -257,6 +278,7 @@ function addCarrier() {
   alert(
     "Επιλέξτε τα κελιά που θα είναι η αρχή και το τέλος του πλοίου (5 σε ευθεία γραμμή κάθετα ή οριζόντια)"
   );
+  //svisimo twn ypoloipwn buttons mexri na teleiwsei h topo8ethsh aytou tou ploiou
   document.getElementById("submarineButton").style.visibility = "hidden";
   document.getElementById("cruiserButton").style.visibility = "hidden";
   document.getElementById("destroyerButton").style.visibility = "hidden";
@@ -268,6 +290,7 @@ function addDestroyer() {
   alert(
     "Επιλέξτε τα κελιά που θα είναι η αρχή και το τέλος του πλοίου (4 σε ευθεία γραμμή κάθετα ή οριζόντια)"
   );
+  //svisimo twn ypoloipwn buttons mexri na teleiwsei h topo8ethsh aytou tou ploiou
   document.getElementById("submarineButton").style.visibility = "hidden";
   document.getElementById("cruiserButton").style.visibility = "hidden";
   document.getElementById("carrierButton").style.visibility = "hidden";
@@ -279,6 +302,7 @@ function addCruiser() {
   alert(
     "Επιλέξτε τα κελιά που θα είναι η αρχή και το τέλος του πλοίου (3 σε ευθεία γραμμή κάθετα ή οριζόντια)"
   );
+  //svisimo twn ypoloipwn buttons mexri na teleiwsei h topo8ethsh aytou tou ploiou
   document.getElementById("submarineButton").style.visibility = "hidden";
   document.getElementById("carrierButton").style.visibility = "hidden";
   document.getElementById("destroyerButton").style.visibility = "hidden";
@@ -290,6 +314,7 @@ function addSubmarine() {
   alert(
     "Επιλέξτε τα κελιά που θα είναι η αρχή και το τέλος του πλοίου (2 σε ευθεία γραμμή κάθετα ή οριζόντια)"
   );
+  //svisimo twn ypoloipwn buttons mexri na teleiwsei h topo8ethsh aytou tou ploiou
   document.getElementById("carrierButton").style.visibility = "hidden";
   document.getElementById("cruiserButton").style.visibility = "hidden";
   document.getElementById("destroyerButton").style.visibility = "hidden";
@@ -321,7 +346,7 @@ function placeShipOnBoard(e) {
       if (x1 == x2) {
         //Elegxos an exoun epilagei swsta kelia apo ton xrhsth
         if (y1 - y2 == 4 || y2 - y1 == 4) {
-          alert("Correct Input!!");
+          //alert("Correct Input!!");
           carrierPlaced = true;
           document.getElementById("carrierButton").style.visibility = "hidden";
           //To if/else xreiazetai dioti mporei o xrhsths na epeleje ta kelia apo dejia pros ta aristera h anapoda
@@ -358,7 +383,7 @@ function placeShipOnBoard(e) {
         //Idia diadikasia me prin alla gia ta kelia na briskontai sthn idia sthlh
       } else if (y1 == y2) {
         if (x1 - x2 == 4 || x2 - x1 == 4) {
-          alert("Correct Input!!");
+          //alert("Correct Input!!");
           carrierPlaced = true;
           document.getElementById("carrierButton").style.visibility = "hidden";
           if (x1 - x2 == 4) {
@@ -403,13 +428,14 @@ function placeShipOnBoard(e) {
       if (!cruiserPlaced) {
         document.getElementById("cruiserButton").style.visibility = "visible";
       }
+      //elegxos an o xrhsths exei topo8ethsei ola tou ta ploia kai enhmerwsh tou status
       if (
         cruiserPlaced &&
         submarinePlaced &&
         carrierPlaced &&
         destroyerPlaced
       ) {
-        document.getElementById("attackButton").style.visibility = "visible";
+        updateStatus;
       }
     }
     //idia diadikasia me to carrier apla gia to cruiser
@@ -427,7 +453,7 @@ function placeShipOnBoard(e) {
 
       if (x1 == x2) {
         if (y1 - y2 == 2 || y2 - y1 == 2) {
-          alert("Correct Input!!");
+          //alert("Correct Input!!");
           cruiserPlaced = true;
           document.getElementById("cruiserButton").style.visibility = "hidden";
 
@@ -462,7 +488,7 @@ function placeShipOnBoard(e) {
         }
       } else if (y1 == y2) {
         if (x1 - x2 == 2 || x2 - x1 == 2) {
-          alert("Correct Input!!");
+          //alert("Correct Input!!");
           cruiserPlaced = true;
           document.getElementById("cruiserButton").style.visibility = "hidden";
           if (x1 - x2 == 2) {
@@ -512,7 +538,7 @@ function placeShipOnBoard(e) {
         carrierPlaced &&
         destroyerPlaced
       ) {
-        document.getElementById("attackButton").style.visibility = "visible";
+        updateStatus;
       }
     }
     //idia diadikasia me to carrier apla gia to destroyer
@@ -530,7 +556,7 @@ function placeShipOnBoard(e) {
 
       if (x1 == x2) {
         if (y1 - y2 == 3 || y2 - y1 == 3) {
-          alert("Correct Input!!");
+          //alert("Correct Input!!");
           destroyerPlaced = true;
           document.getElementById("destroyerButton").style.visibility =
             "hidden";
@@ -567,7 +593,7 @@ function placeShipOnBoard(e) {
         }
       } else if (y1 == y2) {
         if (x1 - x2 == 3 || x2 - x1 == 3) {
-          alert("Correct Input!!");
+          //alert("Correct Input!!");
           destroyerPlaced = true;
           document.getElementById("destroyerButton").style.visibility =
             "hidden";
@@ -617,7 +643,7 @@ function placeShipOnBoard(e) {
         carrierPlaced &&
         destroyerPlaced
       ) {
-        document.getElementById("attackButton").style.visibility = "visible";
+        updateStatus;
       }
     }
     //idia diadikasia me to carrier apla gia to submarine
@@ -635,7 +661,7 @@ function placeShipOnBoard(e) {
 
       if (x1 == x2) {
         if (y1 - y2 == 1 || y2 - y1 == 1) {
-          alert("Correct Input!!");
+          //alert("Correct Input!!");
           counter = counter + 1;
           if (y1 - y2 == 1) {
             for (let ind = y1; ind >= y2; ind--) {
@@ -687,8 +713,7 @@ function placeShipOnBoard(e) {
         }
       } else if (y1 == y2) {
         if (x1 - x2 == 1 || x2 - x1 == 1) {
-          alert("Correct Input!!");
-
+          //alert("Correct Input!!");
           counter = counter + 1;
           if (x1 - x2 == 1) {
             for (let ind = x1; ind >= x2; ind--) {
@@ -755,7 +780,7 @@ function placeShipOnBoard(e) {
         carrierPlaced &&
         destroyerPlaced
       ) {
-        document.getElementById("attackButton").style.visibility = "visible";
+        updateStatus;
       }
     }
   }
@@ -763,13 +788,16 @@ function placeShipOnBoard(e) {
 
 //Synarthsh gia epi8esh sta ploia tou antipalou
 function attackOnBoard(e) {
+  //apo8hkeysh twn syntetagmenwn tou keliou pou path8hke
   e = e || window.event;
   e = e.target || e.srcElement;
   id = e.id;
   cords = String(id).split(",");
   x = parseInt(cords[1]);
   y = parseInt(cords[2]);
+  //elegxos an exei path8ei to koumpi attack
   if (attackIsOn) {
+    //Klhsh ths synarthshs elegxou gia to apotelesma tou attack
     alert("Attackin on : " + e.id);
     attackShip(x, y);
   } else {
@@ -777,25 +805,30 @@ function attackOnBoard(e) {
   }
 }
 
+//Path8hke to koumpi attack
 function attack() {
   attackIsOn = true;
 }
 
+//Path8hke to koumpi rules
 function goToRules() {
   window.open("./kanones.html");
 }
 
+//Synarthsh topo8ethshs ploiwn sthn bash, ka8e keli ploiou prosti8etai seiriaka ston antistoixo pinaka kai oxi ka8e ploio oloklhro
 function placeShipOnBoardDb(x, y) {
+  //eisodos twn syntetagmenwn tou keliou
   x = parseInt(x);
   y = parseInt(y);
 
-  //JSON antikeimeno
+  //Dhmiourgeia enos JSON antikeimenou
   var placeShipData = {
     grammh: x,
     sthlh: y,
     id: token,
   };
 
+  //klhsh tou Ajax gia thn topo8ethsh tou ka8e keliou tou ploiou sthn bash
   $.ajax({
     url: "../PHP/placeShipOnBoard.php",
     method: "POST",
@@ -804,18 +837,22 @@ function placeShipOnBoardDb(x, y) {
     contentType: "application/json",
     success: function (response) {
       successMessage = response.message;
-      //alert(successMessage);
+      console.log(successMessage);
     },
     error: function (response) {
+      //An kati den paei kala (O xrhsths topo8ethsei la8os ta ploia h diadikasia topo8ethshs jekinaei apo thn arxh)
       successMessage = "Σφάλμα: " + response.message;
-      alert(successMessage);
+      alert("Wrong Input");
+      initiateBoards;
     },
   });
 }
 
+//H synarthsh elegxou tou apotelesmatos ths epi8eshs
 function attackShip(x, y) {
+  //apo8hkeysh tou token se topikh metavlhth
   token = window.sessionStorage.getItem("token");
-  //JSON antikeimeno
+  //Dhmiourgeia enos JSON antikeimenou
   var attackShipData = {
     grammh: x,
     sthlh: y,
@@ -823,6 +860,7 @@ function attackShip(x, y) {
     content: 0,
   };
 
+  //Klhsh tou ajax gia diapistosh an yparxei ploio h oxi sto antistoixo keli tou pinaka tou antipalou
   $.ajax({
     url: "../PHP/attackShip.php",
     method: "POST",
@@ -830,8 +868,67 @@ function attackShip(x, y) {
     data: JSON.stringify(attackShipData),
     contentType: "application/json",
     async: !1,
-    success:
-    attackResult,
+    //an ola pane kala 8a klh8ei h attackResult
+    success: attackResult,
+    error: function (response) {
+      successMessage = "Σφάλμα: " + response.message;
+      console.log(successMessage);
+    },
+  });
+}
+
+//Kaleitai otan ola pane kala me to ajax sthn epi8esh kai kalei thn attackOnBoardResult(data) me to data na einai to JSON pou epistrefei to ajax
+function attackResult(data) {
+  attackOnBoardResult(data);
+}
+
+//Kanei ton oristiko elegxo gia thn yparxh h mh ploiou sto keli pou epite8hke o xrhsths
+function attackOnBoardResult(data) {
+  //apo8hkeysh tou json pou epestrepse to ajax se topikh metavlhth
+  attackData = data;
+  //apo8hkeysh twn timwn tou JSON se topikes metavlhtes
+  var x = attackData.grammh;
+  var y = attackData.sthlh;
+  var result = attackData.content;
+  //Dhmiourgeia tou html id tou keliou apo ta x kai y
+  id = "enemy," + String(x) + "," + String(y);
+  //An eixe ploio sto keli, to bafei kokkino kai enhmerwnei ton xrhsth
+  if (result == 1) {
+    document.getElementById(id).style.backgroundColor = "#8b0000";
+    alert("YOU GOT A HIT ON ENEMY SHIP!!");
+  } //An oxi, to bafei mple kai enhmerwnei ton xrhsth
+  else {
+    document.getElementById(id).style.backgroundColor = "#000080";
+    alert("Unfortunetly you missed");
+  }
+  //Afairesh tou event listener apo to keli wste na mhn mporei na ginei attack se ena keli 2 fores
+  document.getElementById(id).removeEventListener("click", attackOnBoard);
+  //Epanafora tou attack flag sto false
+  attackIsOn = false;
+  //enhmerwsh tou status tou paixnidiou
+  updateStatus;
+}
+
+//Synarthsh enhmerwshs tou status tou paixnidiou
+function updateStatus() {
+  //apo8hkeysh tou token se topikh metavlhth
+  token = window.sessionStorage.getItem("token");
+  //Dhmiourgeia enos JSON antikeimenou
+  var updateStatusData = {
+    id: token,
+    end_of_game: false,
+    round: 0,
+    winner: "",
+  };
+  //Xrhsh Ajax gia thn enhmerwsh tou status tou paixnidiou
+  $.ajax({
+    url: "../PHP/updateStatus.php",
+    method: "POST",
+    dataType: "json",
+    data: JSON.stringify(updateStatusData),
+    contentType: "application/json",
+    //an ola pane kala kaleitai h checkStatus
+    success: checkStatus,
     error: function (response) {
       successMessage = "Σφάλμα: " + response.message;
       alert(successMessage);
@@ -839,24 +936,46 @@ function attackShip(x, y) {
   });
 }
 
-function attackResult(data) {
-  attackOnBoardResult(data);
-}
+//Synarthsh pou elegxei thn katastash tou paixnidiou
+function checkStatus(data) {
+  //apo8hkeysh twn timwn tou json pou epistrefei to ajax se topikes metavlhtes
+  statusData = data;
+  //to id edw DEN einai to token ALLA h etiketa tou user
+  var id = statusData.id;
+  var hasEnded = statusData.end_of_game;
+  var round = statusData.round;
+  var winner = statusData.winner;
+  //
+  if (hasEnded) {
+    if ((winner = id)) {
+      alert("Congratulations you WON!!");
+    } else {
+      alert("Sorry You've Lost!!");
+    }
 
-function attackOnBoardResult(data) {
-  attackData = data;
-  var x = attackData.grammh;
-  var y = attackData.sthlh;
-  var result = attackData.content;
-  id = "enemy," + String(x) + "," + String(y);
-  if (result == 1) {
-    document.getElementById(id).style.backgroundColor = "#8b0000";
-    alert("YOU GOT A HIT ON ENEMY SHIP!!");
-  } else {
-    document.getElementById(id).style.backgroundColor = "#000080";
-    alert("Unfortunetly you missed");
+    $.ajax({
+      url: "../PHP/resetStatus.php",
+      method: "POST",
+      contentType: "application/json",
+      success: function (response) {
+        successMessage = response.message;
+        console.log(successMessage);
+      },
+      error: function (response) {
+        successMessage = "Σφάλμα: " + response.message;
+        alert(successMessage);
+      },
+    });
+    initiateBoards;
+  } //An to paixnidi exei arxisei
+  if (round > 0) {
+    //O paikths me to tag friend mporei na epiti8etai mono stous monous gyrous kai o hostile mono stous zygous
+    if (id.localeCompare(friend) == 0) {
+      if (round % 2 == 0) {
+        document.getElementById("attackButton").style.visibility = "hidden";
+      } else {
+        document.getElementById("attackButton").style.visibility = "visible";
+      }
+    }
   }
-  document.getElementById(id).removeEventListener("click", attackOnBoard);
-
-  attackIsOn = false;
 }
