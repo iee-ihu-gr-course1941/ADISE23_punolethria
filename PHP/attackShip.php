@@ -37,6 +37,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $res->fetch_row();
         if($result[0] == 1){
             $attackShipData['content'] = 1;
+            if(strcmp($etiketaPaikth,"friend")==0){
+                $sql_update_ss = 'update  naumaxiaDB.foeboard set content = NULL where grammh=? and sthlh=?';
+            }
+            else{
+                $sql_update_ss = 'update  naumaxiaDB.friendlyboard set content = NULL where grammh=? and sthlh=?';    
+            }
+            $sql_update = $mysqli->prepare($sql_update_ss);
+            $sql_update->bind_param('ii', $grammh,$sthlh);
+            $sql_update->execute();
         }else{
             $attackShipData['content'] = 0;
         }
