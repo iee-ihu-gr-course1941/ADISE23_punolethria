@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $response = array("status" => "error", "message" => "Κάτι δεν πήγε καλά!");
 
     } else {
-        if(strcmp($etiketaPaikth,"friend")==0){
+        if(strcmp($etiketaPaikth,"friendly")==0){
             $sql = 'select content from naumaxiaDB.foeboard where grammh=? and sthlh=?';
         }
         else{
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result = $res->fetch_row();
         if($result[0] == 1){
             $attackShipData['content'] = 1;
-            if(strcmp($etiketaPaikth,"friend")==0){
+            if(strcmp($etiketaPaikth,"friendly")==0){
                 $sql_update_ss = 'update  naumaxiaDB.foeboard set content = NULL where grammh=? and sthlh=?';
             }
             else{

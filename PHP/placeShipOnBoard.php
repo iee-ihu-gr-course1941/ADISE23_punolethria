@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($stmt_verify->num_rows === 0) {
         $response = array("status" => "error", "message" => "Κάτι δεν πήγε καλά!");
     } else {
-        if(strcmp($etiketaPaikth, "friend") == 0){
+        if(strcmp($etiketaPaikth, "friendly") == 0){
             $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.friendlyboard SET content = 1 WHERE grammh = ? AND sthlh = ? ");
             $stmt_update->bind_param("ii", $grammh, $sthlh);
             $stmt_update->execute();

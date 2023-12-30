@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt_verify->bind_result($etiketaPaikth); // Fetch the result
     $stmt_verify->fetch();
 
-    if(strcmp($etiketaPaikth, "friend") == 0){
+    if(strcmp($etiketaPaikth, "friendly") == 0){
         $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.friendlyboard SET content = NULL");
         $stmt_update->execute();
     }else {

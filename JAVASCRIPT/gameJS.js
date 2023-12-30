@@ -45,17 +45,6 @@ function setToken() {
 }
 
 //start main.js
-//Synarthsh pou ana8etei ta tags friendly kai hostile ston ka8e user
-function selectedTag() {
-  var selectedValue = document.getElementById("dropdownOptions").value;
-
-  // Display the selected value (you can replace this with your own logic)
-  if (selectedValue === "option1") {
-    return "friend";
-  } else if (selectedValue === "option2") {
-    return "hostile";
-  }
-}
 
 //H synarthsh ypey8ynh gia thn egrafh twn xrhstwn sthn bash
 function signUp() {
@@ -63,7 +52,7 @@ function signUp() {
   var username = document.getElementById("signUpusername").value;
   var password = document.getElementById("signUpPassword").value;
   var passwordRepeat = document.getElementById("signUpPasswordRepeat").value;
-  var tagName = selectedTag();
+  //var tagName = selectedTag();
   //ana8esh token ston xrhsth pou ekane sign up
   setToken();
   //elegxos gia kena username h password
@@ -78,7 +67,7 @@ function signUp() {
 
   //Dhmhiourgia enos JSON antikeimeno
   var signUpdata = {
-    playerTag: tagName,
+    //playerTag: tagName,
     playerUsername: username,
     playerPassword: password,
     playerPasswordRepeat: passwordRepeat,
@@ -170,7 +159,8 @@ function logIn() {
   });
 
   //Enhmerwsh tou status tou paixnidiou
-  updateStatus;
+  
+  updateStatusLogin();
 }
 
 function showLogInForm() {
@@ -435,7 +425,8 @@ function placeShipOnBoard(e) {
         carrierPlaced &&
         destroyerPlaced
       ) {
-        updateStatus;
+        updateStatus();
+        document.getElementById("attackButton").style.visibility = "visible";
       }
     }
     //idia diadikasia me to carrier apla gia to cruiser
@@ -538,7 +529,8 @@ function placeShipOnBoard(e) {
         carrierPlaced &&
         destroyerPlaced
       ) {
-        updateStatus;
+        updateStatus();
+        document.getElementById("attackButton").style.visibility = "visible";
       }
     }
     //idia diadikasia me to carrier apla gia to destroyer
@@ -643,7 +635,8 @@ function placeShipOnBoard(e) {
         carrierPlaced &&
         destroyerPlaced
       ) {
-        updateStatus;
+        updateStatus();
+        document.getElementById("attackButton").style.visibility = "visible";
       }
     }
     //idia diadikasia me to carrier apla gia to submarine
@@ -780,7 +773,8 @@ function placeShipOnBoard(e) {
         carrierPlaced &&
         destroyerPlaced
       ) {
-        updateStatus;
+        updateStatus();
+        document.getElementById("attackButton").style.visibility = "visible";
       }
     }
   }
@@ -906,11 +900,11 @@ function attackOnBoardResult(data) {
   //Epanafora tou attack flag sto false
   attackIsOn = false;
   //enhmerwsh tou status tou paixnidiou
-  updateStatus;
+  updateStatus();
 }
 
-//Synarthsh enhmerwshs tou status tou paixnidiou
-function updateStatus() {
+
+function updateStatusLogin() {
   //apo8hkeysh tou token se topikh metavlhth
   token = window.sessionStorage.getItem("token");
   //Dhmiourgeia enos JSON antikeimenou
@@ -922,7 +916,35 @@ function updateStatus() {
   };
   //Xrhsh Ajax gia thn enhmerwsh tou status tou paixnidiou
   $.ajax({
-    url: "../PHP/updateStatus.php",
+    url: "PHP/gameStatus.php",
+    method: "POST",
+    dataType: "json",
+    data: JSON.stringify(updateStatusData),
+    contentType: "application/json",
+    //an ola pane kala kaleitai h checkStatus
+    success: checkStatus,
+    error: function (response) {
+      successMessage = "Σφάλμα: " + response.message;
+      alert(successMessage);
+    },
+  });
+}
+
+//Synarthsh enhmerwshs tou status tou paixnidiou
+function updateStatus() {
+  
+  //apo8hkeysh tou token se topikh metavlhth
+  token = window.sessionStorage.getItem("token");
+  //Dhmiourgeia enos JSON antikeimenou
+  var updateStatusData = {
+    id: token,
+    end_of_game: false,
+    round: 0,
+    winner: "",
+  };
+  //Xrhsh Ajax gia thn enhmerwsh tou status tou paixnidiou
+  $.ajax({
+    url: "../PHP/gameStatus.php",
     method: "POST",
     dataType: "json",
     data: JSON.stringify(updateStatusData),
@@ -947,7 +969,7 @@ function checkStatus(data) {
   var winner = statusData.winner;
   //
   if (hasEnded) {
-    if ((winner = id)) {
+    if ((winner == id)) {
       alert("Congratulations you WON!!");
     } else {
       alert("Sorry You've Lost!!");
@@ -966,15 +988,25 @@ function checkStatus(data) {
         alert(successMessage);
       },
     });
-    initiateBoards;
+    initiateBoards();
   } //An to paixnidi exei arxisei
   if (round > 0) {
-    //O paikths me to tag friend mporei na epiti8etai mono stous monous gyrous kai o hostile mono stous zygous
-    if (id.localeCompare(friend) == 0) {
+    //O paikths me to tag friendly mporei na epiti8etai mono stous monous gyrous kai o hostile mono stous zygous
+    if (id.localeCompare("friendly") == 0) {
+      alert("hi!!!!!!!!!!!!!!!!");
       if (round % 2 == 0) {
         document.getElementById("attackButton").style.visibility = "hidden";
       } else {
         document.getElementById("attackButton").style.visibility = "visible";
+      }
+    }else{
+      if (round % 2 != 0) {
+        document.getElementById("attackButton").style.visibility = "hidden";
+      } else {
+        document.getElementById("attackButton").style.visibility = "visible";
+      }  
+      if(round==2){
+        document.getElementById("attackButton").style.visibility = "visible";  
       }
     }
   }

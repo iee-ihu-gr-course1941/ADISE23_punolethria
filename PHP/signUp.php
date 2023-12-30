@@ -10,24 +10,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $data = json_decode(file_get_contents('php://input'), true);
 
-    $playerTag = $data['playerTag'];
+    $playerTag;
     $username = $data['playerUsername'];
     $password = $data['playerPassword'];
     $passwordRepeat = $data['playerPasswordRepeat'];
     $token = $data['playerToken'];
 
-    $stmt_verify_role = $mysqli->prepare("SELECT etiketaPaikth FROM naumaxiaDB.paiktes WHERE etiketaPaikth = ?");
-    $stmt_verify_role->bind_param("s", $playerTag);
+    $stmt_verify_role = $mysqli->prepare("SELECT etiketaPaikth FROM naumaxiaDB.paiktes");
     $stmt_verify_role->execute();
     $stmt_verify_role->store_result();
+    $stmt_verify_role->bind_result($etiketaPaikth);
+    $stmt_verify_role->fetch();
     $numExistingRoles = $stmt_verify_role->num_rows;
-
-    if ($numExistingRoles > 0) {
-        $response = array("status" => "error", "message" => "Υπάρχει ήδη ένας χρήστης με την ετικέτα $playerTag!");
-        echo json_encode($response);
-        exit; 
-    }
-
     $stmt_verify_role->close();
 
     $stmt = $mysqli->prepare("SELECT * FROM paiktes WHERE usernamePaikth = ?");
@@ -40,6 +34,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $exists = true;
     } else if ($num == 0) {
         if (($password == $passwordRepeat) && !$exists) {
+            if ($numExistingRoles == 0) {
+                $playerTag = "friendly";   
+            }
+            else{
+                $playerTag = "hostile";
+            }
+            if($numExistingRoles==2){
+                $response = array("status" => "error", "message" => "Ο μέγιστος όρος εγγραφών έχει καλυφθεί!");
+                exit;
+            }
 
             $hash = password_hash($password, PASSWORD_DEFAULT);
 

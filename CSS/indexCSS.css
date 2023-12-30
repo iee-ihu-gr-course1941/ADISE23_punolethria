@@ -122,27 +122,3 @@ a{
   color: white;
   font-size: 30px;
 }
-
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-#dropdownOptions {
-  padding: 8px;
-  font-size: 16px;
-  border: none;
-}
-
-.dropdown select {
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  cursor: pointer;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  background-color: #fff;
-  color: #333;
-}
