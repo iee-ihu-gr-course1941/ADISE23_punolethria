@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt_lose->store_result();
         $stmt_lose->bind_result($gameResult);
         $stmt_lose->fetch();
-        if($gameResult != NULL){
+        if($gameResult != "NULL"){
             $updateStatusData['end_of_game'] = true;
             $stmt_reset = $mysqli->prepare("UPDATE naumaxiaDB.statuspaixnidiou SET result=NULL");
             $stmt_reset->execute();

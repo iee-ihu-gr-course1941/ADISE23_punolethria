@@ -801,9 +801,10 @@ function attackOnBoard(e) {
 
 //Path8hke to koumpi attack
 function attack() {
+  checkStatus();
   round = window.sessionStorage.getItem("round");
   tag = window.sessionStorage.getItem("id");
-  if (tag.localeCompare("friendly") == 0) {
+  if (String(tag).localeCompare("friendly") == 0) {
     if (round % 2 == 0) {
       attackIsOn = true;
     } else {
