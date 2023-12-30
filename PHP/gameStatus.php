@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $updateStatusData['id'] = $etiketaPaikth;
 
     if($result> -3 && $result < 1){
-        $stmt_update_1 = $mysqli->prepare("UPDATE naumaxiaDB.statuspaixnidiou SET status = 'initialized'");
+        $stmt_update_1 = $mysqli->prepare("UPDATE naumaxiaDB.statuspaixnidiou SET game_status = 'initialized'");
         $stmt_update_1->execute();
         $stmt_lose = $mysqli->prepare("SELECT result FROM naumaxiaDB.statuspaixnidiou");
         $stmt_lose->execute();
@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             }
         }
     }else if($result == 1){
-        $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.statuspaixnidiou SET status = 'active'");
+        $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.statuspaixnidiou SET game_status = 'active'");
         $stmt_update->execute();
     }else if($result>1){
         if(strcmp($etiketaPaikth,"friendly")==0){
@@ -62,10 +62,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($sql_check_winner->num_rows === 0) {
             $updateStatusData['end_of_game'] = true;
             if(strcmp($etiketaPaikth,"friendly")==0){
-                $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.statuspaixnidiou SET status = 'ended', result='friend'");
+                $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.statuspaixnidiou SET game_status = 'ended', result='friendly '");
                 $stmt_update->execute();
             }else{
-                $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.statuspaixnidiou SET status = 'ended', result='foe'");
+                $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.statuspaixnidiou SET game_status = 'ended', result='foe'");
                 $stmt_update->execute();
             }
         }

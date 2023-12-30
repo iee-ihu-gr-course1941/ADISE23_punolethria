@@ -295,7 +295,7 @@ CREATE TABLE `paiktes` (
 
 -- Dumping structure for table naumaxiaDatabase.statuspaixnidiou
 CREATE TABLE `statuspaixnidiou` (
-	`status` ENUM('not active','initialized','active','ended','aborted') NOT NULL DEFAULT 'not active' COLLATE 'utf8mb3_bin',
+	`game_status` ENUM('not active','initialized','active','ended','aborted') NOT NULL DEFAULT 'not active' COLLATE 'utf8mb3_bin',
 	`result` ENUM('friendly','foe') NULL DEFAULT NULL COLLATE 'utf8mb3_bin',
 	`last_change` TIMESTAMP NULL DEFAULT NULL,
 	`round` INT(11) NULL DEFAULT NULL
@@ -305,7 +305,8 @@ COLLATE='utf8mb3_bin'
 ENGINE=InnoDB
 ;
 
-INSERT INTO `statuspaixnidiou` (`status`,`result`,`last_change`,`round`) VALUES('not active',NULL,NULL,-3);
+
+INSERT INTO `statuspaixnidiou` (`game_status`,`result`,`last_change`,`round`) VALUES('not active',NULL,NULL,-3);
 
 -- Dumping data for table naumaxiaDatabase.statuspaixnidiou: ~0 rows (approximately)
 

@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     echo $modified_json_data;
     // Close both statements
-    $stmt_verify->close();
+    $stmt_verify_1->close();
     
 }
 ?>

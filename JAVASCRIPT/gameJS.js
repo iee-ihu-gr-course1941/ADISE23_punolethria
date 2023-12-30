@@ -980,6 +980,7 @@ function checkStatus(data) {
   var hasEnded = statusData.end_of_game;
   var round = statusData.round;
   var winner = statusData.winner;
+  alert(round);
   //
   if (hasEnded) {
     if (winner == id) {
@@ -1001,7 +1002,7 @@ function checkStatus(data) {
         alert(successMessage);
       },
     });
-    window.location.href = "HTML/game.html";
+    window.location.reload();
   }
 }
 
@@ -1028,5 +1029,5 @@ function getRound() {
 function setRound(data) {
   getrData = data;
   round = getrData.round;
-  window.sessionStorage("round", round);
+  window.sessionStorage.setItem("round", round);
 }
