@@ -801,7 +801,7 @@ function attackOnBoard(e) {
 
 //Path8hke to koumpi attack
 function attack() {
-  checkStatus();
+  getRound();
   round = window.sessionStorage.getItem("round");
   tag = window.sessionStorage.getItem("id");
   if (String(tag).localeCompare("friendly") == 0) {
@@ -1001,8 +1001,32 @@ function checkStatus(data) {
         alert(successMessage);
       },
     });
-    initiateBoards();
+    window.location.href = "HTML/game.html";
   }
-  window.sessionStorage.setItem("round", round);
-  window.sessionStorage.setItem("tag", id);
+}
+
+function getRound() {
+  var getRoundData = {
+    round: 0,
+  };
+
+  $.ajax({
+    url: "../PHP/getRound.php",
+    method: "POST",
+    dataType: "json",
+    data: JSON.stringify(getRoundData),
+    contentType: "application/json",
+    //an ola pane kala kaleitai h checkStatus
+    success: setRound,
+    error: function (response) {
+      successMessage = "Σφάλμα: " + response.message;
+      alert(successMessage);
+    },
+  });
+}
+
+function setRound(data) {
+  getrData = data;
+  round = getrData.round;
+  window.sessionStorage("round", round);
 }
