@@ -159,7 +159,7 @@ function logIn() {
   });
 
   //Enhmerwsh tou status tou paixnidiou
-  
+
   updateStatusLogin();
 }
 
@@ -801,7 +801,21 @@ function attackOnBoard(e) {
 
 //Path8hke to koumpi attack
 function attack() {
-  attackIsOn = true;
+  round = window.sessionStorage.getItem("round");
+  tag = window.sessionStorage.getItem("id");
+  if (tag.localeCompare("friendly") == 0) {
+    if (round % 2 == 0) {
+      attackIsOn = true;
+    } else {
+      alert("Είναι η σειρά του αντιπάλου να επιτεθεί");
+    }
+  } else {
+    if (round % 2 != 0) {
+      attackIsOn = true;
+    } else {
+      alert("Είναι η σειρά του αντιπάλου να επιτεθεί");
+    }
+  }
 }
 
 //Path8hke to koumpi rules
@@ -903,7 +917,6 @@ function attackOnBoardResult(data) {
   updateStatus();
 }
 
-
 function updateStatusLogin() {
   //apo8hkeysh tou token se topikh metavlhth
   token = window.sessionStorage.getItem("token");
@@ -932,7 +945,6 @@ function updateStatusLogin() {
 
 //Synarthsh enhmerwshs tou status tou paixnidiou
 function updateStatus() {
-  
   //apo8hkeysh tou token se topikh metavlhth
   token = window.sessionStorage.getItem("token");
   //Dhmiourgeia enos JSON antikeimenou
@@ -969,7 +981,7 @@ function checkStatus(data) {
   var winner = statusData.winner;
   //
   if (hasEnded) {
-    if ((winner == id)) {
+    if (winner == id) {
       alert("Congratulations you WON!!");
     } else {
       alert("Sorry You've Lost!!");
@@ -989,25 +1001,7 @@ function checkStatus(data) {
       },
     });
     initiateBoards();
-  } //An to paixnidi exei arxisei
-  if (round > 0) {
-    //O paikths me to tag friendly mporei na epiti8etai mono stous monous gyrous kai o hostile mono stous zygous
-    if (id.localeCompare("friendly") == 0) {
-      alert("hi!!!!!!!!!!!!!!!!");
-      if (round % 2 == 0) {
-        document.getElementById("attackButton").style.visibility = "hidden";
-      } else {
-        document.getElementById("attackButton").style.visibility = "visible";
-      }
-    }else{
-      if (round % 2 != 0) {
-        document.getElementById("attackButton").style.visibility = "hidden";
-      } else {
-        document.getElementById("attackButton").style.visibility = "visible";
-      }  
-      if(round==2){
-        document.getElementById("attackButton").style.visibility = "visible";  
-      }
-    }
   }
+  window.sessionStorage.setItem("round", round);
+  window.sessionStorage.setItem("tag", id);
 }
