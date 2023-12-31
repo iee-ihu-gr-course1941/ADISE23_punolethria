@@ -807,6 +807,7 @@ function attack() {
   //alert(String(tag).localeCompare("friendly")+","+round % 2);
   if(round < 0){
     alert("Sorry you've lost!");
+    updateStatus();
     window.location.reload();
   }
   else if (String(tag).localeCompare("friendly") == 0) {
@@ -990,8 +991,10 @@ function checkStatus(data) {
     //alert(winner+","+id);
     if (winner == id) {
       alert("Congratulations you WON!!");
+      updateStatus();
     } else {
       alert("Sorry You've Lost!!");
+      updateStatus();
     }
 
     $.ajax({
