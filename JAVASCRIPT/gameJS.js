@@ -792,7 +792,7 @@ function attackOnBoard(e) {
   //elegxos an exei path8ei to koumpi attack
   if (attackIsOn) {
     //Klhsh ths synarthshs elegxou gia to apotelesma tou attack
-    alert("Attackin on : " + e.id);
+    //alert("Attackin on : " + e.id);
     attackShip(x, y);
   } else {
     alert("You have not selected to attack!");
@@ -804,13 +804,18 @@ function attack() {
   getRound();
   round = window.sessionStorage.getItem("round");
   tag = window.sessionStorage.getItem("id");
-  if (String(tag).localeCompare("friendly") == 0) {
+  //alert(String(tag).localeCompare("friendly")+","+round % 2);
+  if(round < 0){
+    alert("Sorry you've lost!");
+    window.location.reload();
+  }
+  else if (String(tag).localeCompare("friendly") == 0) {
     if (round % 2 == 0) {
       attackIsOn = true;
     } else {
       alert("Είναι η σειρά του αντιπάλου να επιτεθεί");
     }
-  } else {
+  } else if(String(tag).localeCompare("hostile") == 0){
     if (round % 2 != 0) {
       attackIsOn = true;
     } else {
@@ -852,7 +857,7 @@ function placeShipOnBoardDb(x, y) {
       //An kati den paei kala (O xrhsths topo8ethsei la8os ta ploia h diadikasia topo8ethshs jekinaei apo thn arxh)
       successMessage = "Σφάλμα: " + response.message;
       alert("Wrong Input");
-      initiateBoards;
+      window.location.reload();
     },
   });
 }
@@ -904,11 +909,11 @@ function attackOnBoardResult(data) {
   //An eixe ploio sto keli, to bafei kokkino kai enhmerwnei ton xrhsth
   if (result == 1) {
     document.getElementById(id).style.backgroundColor = "#8b0000";
-    alert("YOU GOT A HIT ON ENEMY SHIP!!");
+    //alert("YOU GOT A HIT ON ENEMY SHIP!!");
   } //An oxi, to bafei mple kai enhmerwnei ton xrhsth
   else {
     document.getElementById(id).style.backgroundColor = "#000080";
-    alert("Unfortunetly you missed");
+    //alert("Unfortunetly you missed");
   }
   //Afairesh tou event listener apo to keli wste na mhn mporei na ginei attack se ena keli 2 fores
   document.getElementById(id).removeEventListener("click", attackOnBoard);
@@ -977,12 +982,12 @@ function checkStatus(data) {
   statusData = data;
   //to id edw DEN einai to token ALLA h etiketa tou user
   var id = statusData.id;
+  window.sessionStorage.setItem("id",id);
   var hasEnded = statusData.end_of_game;
   var round = statusData.round;
   var winner = statusData.winner;
-  alert(round);
-  //
   if (hasEnded) {
+    //alert(winner+","+id);
     if (winner == id) {
       alert("Congratulations you WON!!");
     } else {
@@ -998,7 +1003,7 @@ function checkStatus(data) {
         console.log(successMessage);
       },
       error: function (response) {
-        successMessage = "Σφάλμα: " + response.message;
+        successMessage = "Σφάλμα:!! " + response.message;
         alert(successMessage);
       },
     });
@@ -1016,6 +1021,7 @@ function getRound() {
     method: "POST",
     dataType: "json",
     data: JSON.stringify(getRoundData),
+    async: false,
     contentType: "application/json",
     //an ola pane kala kaleitai h checkStatus
     success: setRound,
@@ -1028,6 +1034,8 @@ function getRound() {
 
 function setRound(data) {
   getrData = data;
-  round = getrData.round;
+  round = Object.values(getrData.round)[0];;
+  //alert(round);
   window.sessionStorage.setItem("round", round);
 }
+

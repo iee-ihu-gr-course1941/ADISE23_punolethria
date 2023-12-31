@@ -296,7 +296,7 @@ CREATE TABLE `paiktes` (
 -- Dumping structure for table naumaxiaDatabase.statuspaixnidiou
 CREATE TABLE `statuspaixnidiou` (
 	`game_status` ENUM('not active','initialized','active','ended','aborted') NOT NULL DEFAULT 'not active' COLLATE 'utf8mb3_bin',
-	`result` ENUM('friendly','foe') NULL DEFAULT NULL COLLATE 'utf8mb3_bin',
+	`result` ENUM('friendly','foe',NULL) NULL DEFAULT NULL COLLATE 'utf8mb3_bin',
 	`last_change` TIMESTAMP NULL DEFAULT NULL,
 	`round` INT(11) NULL DEFAULT NULL
 )
