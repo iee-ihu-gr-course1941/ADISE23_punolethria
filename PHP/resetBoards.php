@@ -27,11 +27,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     if ($stmt_update->affected_rows > 0) {
-        $response = array("status" => "success", "message" => "Update successful");
+        $response = array("status" => "success", "message" => "Η αρχικοποίηση των πινάκων έγινε με επιτυχία!");
         $stmt_verify->close();
         $stmt_update->close();
     } else {
-        $response = array("status" => "error", "message" => "Update failed");
+        $response = array("status" => "error", "message" => "Λάθος κατά την αρχικοποίηση των πινάκων");
     }
 
 

@@ -29,7 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $stmt->store_result();
     $num = $stmt->num_rows;
-    $stmt->close();
 
     if ($num > 0) {
         $exists = true;

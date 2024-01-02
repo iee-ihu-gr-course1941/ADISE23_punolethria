@@ -43,26 +43,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $response = array("status" => "error", "message" => "Λάθος username ή κωδικός!");
     }
 
-   // if ($stmt_verify->num_rows === 0) {
-       // $response = array("status" => "error", "message" => "Λάθος usernamne ή κωδικός!");
+   if ($stmt_verify->num_rows === 0) {
+        $response = array("status" => "error", "message" => "Λάθος usernamne ή κωδικός!");
 
-    //} else {
+    } else {
         // Initialize $stmt_update outside the if block
-       // $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.paiktes SET idPaikth = ? WHERE usernamePaikth = ? ");
-        //$stmt_update->bind_param("ss", $token, $username);
-       // $stmt_update->execute();
+       $stmt_update = $mysqli->prepare("UPDATE naumaxiaDB.paiktes SET idPaikth = ? WHERE usernamePaikth = ? ");
+        $stmt_update->bind_param("ss", $token, $username);
+       $stmt_update->execute();
 
-        //if ($stmt_update->affected_rows > 0) {
-           // $response = array("status" => "success", "message" => "Επιτυχής σύνδεση!");
-           // $stmt_verify->close();
-           // $stmt_update->close();
-       // } else {
-          //  $response = array("status" => "error", "message" => "Ανεπιτυχής σύνδεση!");
-       // }
+        if ($stmt_update->affected_rows > 0) {
+           $response = array("status" => "success", "message" => "Επιτυχής σύνδεση!");
+            $stmt_verify->close();
+            $stmt_update->close();
+        } else {
+            $response = array("status" => "error", "message" => "Ανεπιτυχής σύνδεση!");
+        }
     
 
     echo json_encode($response);
     }
+}
 
     // Close both statements
 

@@ -33,11 +33,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt_update->execute();
         }
         if ($stmt_update->affected_rows > 0) {
-            $response = array("status" => "success", "message" => "Update successful");
+            $response = array("status" => "success", "message" => "Επιτυχής ενημέρωση!");
             $stmt_verify->close();
             $stmt_update->close();
         } else {
-            $response = array("status" => "error", "message" => "Update failed");
+            $response = array("status" => "error", "message" => "Σφάλμα κατά την ενημέρωση!");
         }
     }
 

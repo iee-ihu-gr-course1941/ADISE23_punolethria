@@ -81,10 +81,8 @@ function signUp() {
     data: JSON.stringify(signUpdata),
     contentType: "application/json",
     success: function (response) {
-      alert('alal');
       successMessage = response.message;
       alert(successMessage);
-  
       document.getElementById("signUpForm").style.display = "none";
       document.getElementById("signInQuestion").style.display = "none";
       document.getElementById("loginForm").style.display = "block";
@@ -812,7 +810,7 @@ function attack() {
   tag = window.sessionStorage.getItem("id");
   //alert(String(tag).localeCompare("friendly")+","+round % 2);
   if(round < 0){
-    alert("Sorry you've lost!");
+    alert("Δυστηχώς έχασες!");
     updateStatus();
     window.location.reload();
   }
@@ -996,10 +994,10 @@ function checkStatus(data) {
   if (hasEnded) {
     //alert(winner+","+id);
     if (winner == id) {
-      alert("Congratulations you WON!!");
+      alert("Συγχαρητήρια ΚΕΡΔΙΣΕΣ!!");
       updateStatus();
     } else {
-      alert("Sorry You've Lost!!");
+      alert("Δυστηχώς έχασες!!");
       updateStatus();
     }
 
