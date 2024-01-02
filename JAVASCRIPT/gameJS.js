@@ -799,7 +799,7 @@ function attackOnBoard(e) {
     //alert("Attackin on : " + e.id);
     attackShip(x, y);
   } else {
-    alert("You have not selected to attack!");
+    alert("Δεν έχετε επιλέξει να επιτεθείτε!");
   }
 }
 
