@@ -29,22 +29,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $stmt->store_result();
     $num = $stmt->num_rows;
+    $stmt->close();
 
     if ($num > 0) {
         $exists = true;
+        http_response_code(400);
+        $response = array("status" => "error", "message" => "Αυτό το username χρησιμοποιείται ήδη!");
+        echo json_encode($response);
+        exit();
     } else if ($num == 0) {
-        if (($password == $passwordRepeat) && !$exists) {
+        if(strcmp($password, $passwordRepeat) == 0 && !$exists) {
             if ($numExistingRoles == 0) {
                 $playerTag = "friendly";   
-            }
-            else{
+            } else {
                 $playerTag = "hostile";
             }
-            if($numExistingRoles==2){
+            if ($numExistingRoles == 2) {
+                http_response_code(400);
                 $response = array("status" => "error", "message" => "Ο μέγιστος όρος εγγραφών έχει καλυφθεί!");
-                exit;
+                echo json_encode($response);
+                exit();
             }
-
+            
             $hash = password_hash($password, PASSWORD_DEFAULT);
 
             $stmt_insert = $mysqli->prepare("INSERT INTO naumaxiaDB.paiktes (etiketaPaikth, usernamePaikth, passwordPaikth, idPaikth) VALUES (?, ?, ?, ?)");
@@ -53,11 +59,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             if ($stmt_insert->affected_rows > 0) {
                 $response = array("status" => "success", "message" => "Η εγγραφή πραγματοποιήθηκε με επιτυχία!");
-                $showAlert = true;
+                echo json_encode($response);
             } else {
                 $response = array("status" => "error", "message" => "Λάθος κατά την εγγραφή!");
+                echo json_encode($response);
             }
-            echo json_encode($response);
 
             $stmt_insert->close();
         }

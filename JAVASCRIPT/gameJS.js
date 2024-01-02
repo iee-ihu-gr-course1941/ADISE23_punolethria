@@ -57,17 +57,16 @@ function signUp() {
   setToken();
   //elegxos gia kena username h password
   if (username === "" || password === "" || passwordRepeat === "") {
-    window.alert("Please fill in all fields.");
+    window.alert("Παρακαλώ συμπληρώστε όλα τα πεδία!");
     return false;
   } //elegxos oti ta password einai idia
   if (password != passwordRepeat) {
-    window.alert("Passwords do not match!");
+    window.alert("Οι κωδικοί δεν ταιριάζουν!");
     return false;
   }
 
   //Dhmhiourgia enos JSON antikeimeno
   var signUpdata = {
-    //playerTag: tagName,
     playerUsername: username,
     playerPassword: password,
     playerPasswordRepeat: passwordRepeat,
@@ -82,19 +81,25 @@ function signUp() {
     data: JSON.stringify(signUpdata),
     contentType: "application/json",
     success: function (response) {
+      alert('alal');
       successMessage = response.message;
       alert(successMessage);
-
+  
       document.getElementById("signUpForm").style.display = "none";
       document.getElementById("signInQuestion").style.display = "none";
       document.getElementById("loginForm").style.display = "block";
       document.getElementById("logInQuestion").style.display = "block";
     },
-    error: function (response) {
-      successMessage = "Σφάλμα: " + response.message;
-      alert(successMessage);
+    error: function (xhr, status, error) {
+      if (xhr.status == 400) {
+        var errorMessage = JSON.parse(xhr.responseText).message;
+        alert(errorMessage);
+      } else {
+        alert("Unexpected error: " + status + " - " + error);
+      }
     },
   });
+  
 
   var loginUsername = document.getElementById("loginUsername");
   var loginPassword = document.getElementById("loginPassword");
@@ -139,18 +144,19 @@ function logIn() {
   //Ajax gia syndesh me thn bash kai oristiko login tou xrhsth
   $.ajax({
     url: "PHP/logIn.php",
-    method: "PUT",
+    method: "POST",
     dataType: "json",
     data: JSON.stringify(logInData),
     contentType: "application/json",
     success: function (response) {
       if (response.status === "success") {
+        alert(response.message);
         document.getElementById("loginForm").style.display = "none";
         document.getElementById("logInQuestion").style.display = "none";
         //an ola pane kala o xrhsths blepei thn game.html
         window.location.href = "HTML/game.html";
       } else {
-        console.error("Login failed:", response.message);
+        alert(response.message);
       }
     },
     error: function (jqXHR) {
