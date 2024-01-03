@@ -14,20 +14,6 @@
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
--- Dumping structure for table naumaxiaDatabase.boatsreset
-CREATE TABLE IF NOT EXISTS `boatsreset` (
-  `onomaPliou` varchar(20) NOT NULL,
-  `mhkosPliou` tinyint(4) NOT NULL DEFAULT 0,
-  `posothtaPliwn` tinyint(4) DEFAULT 0,
-  PRIMARY KEY (`onomaPliou`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin COMMENT='Xrhsh gia reset twn diathesimwn karaviwn kathe paikth';
-
--- Dumping data for table naumaxiaDatabase.boatsreset: ~4 rows (approximately)
-INSERT INTO `boatsreset` (`onomaPliou`, `mhkosPliou`, `posothtaPliwn`) VALUES
-	('aeroplanoforo', 5, 1),
-	('antitorpiliko', 4, 1),
-	('polemiko', 3, 1),
-	('ypovrixio', 2, 2);
 
 -- Dumping structure for table naumaxiaDatabase.foeboard
 CREATE TABLE IF NOT EXISTS `foeboard` (
@@ -139,22 +125,6 @@ INSERT INTO `foeboard` (`grammh`, `sthlh`, `content`) VALUES
 (9, 8, NULL),
 (9, 9, NULL);
 
--- Dumping structure for table naumaxiaDatabase.foeboats
-CREATE TABLE IF NOT EXISTS `foeboats` (
-  `onomaPliou` varchar(20) NOT NULL,
-  `mhkosPliou` tinyint(4) NOT NULL,
-  `posothtaPliwn` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`onomaPliou`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin COMMENT='apothikeysh twn diathesimwn pliwn tou foe';
-
--- Dumping data for table naumaxiaDatabase.foeboats: ~4 rows (approximately)
-INSERT INTO `foeboats` (`onomaPliou`, `mhkosPliou`, `posothtaPliwn`) VALUES
-	('aeroplanoforo', 5, 1),
-	('antitorpiliko', 4, 1),
-	('polemiko', 3, 1),
-	('ypovrixio', 2, 2);
-
-
 
 -- Dumping structure for table naumaxiaDatabase.friendlyboard
 CREATE TABLE IF NOT EXISTS `friendlyboard` (
@@ -265,22 +235,6 @@ INSERT INTO `friendlyboard` (`grammh`, `sthlh`, `content`) VALUES
 (9, 7, NULL),
 (9, 8, NULL),
 (9, 9, NULL),
-
--- Dumping structure for table naumaxiaDatabase.friendlyboats
-CREATE TABLE IF NOT EXISTS `friendlyboats` (
-  `onomaPliou` varchar(20) NOT NULL,
-  `mhkosPliou` tinyint(4) NOT NULL,
-  `posothtaPliwn` tinyint(4) DEFAULT NULL,
-  PRIMARY KEY (`onomaPliou`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin COMMENT='apothikeysh twn diathesimwn pliwn tou friendly';
-
--- Dumping data for table naumaxiaDatabase.friendlyboats: ~4 rows (approximately)
-INSERT INTO `friendlyboats` (`onomaPliou`, `mhkosPliou`, `posothtaPliwn`) VALUES
-	('aeroplanoforo', 5, 1),
-	('antitorpiliko', 4, 1),
-	('polemiko', 3, 1),
-	('ypovrixio', 2, 2);
-
 
 
 -- Dumping structure for table naumaxiaDatabase.paiktes
