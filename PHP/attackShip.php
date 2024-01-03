@@ -22,7 +22,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($stmt_verify->num_rows === 0) {
         $response = array("status" => "error", "message" => "Κάτι δεν πήγε καλά!");
-
     } else {
         if(strcmp($etiketaPaikth,"friendly")==0){
             $sql = 'select content from naumaxiaDB.foeboard where grammh=? and sthlh=?';
