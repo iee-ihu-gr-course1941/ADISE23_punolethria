@@ -14,9 +14,9 @@ Table of Contents
          * [Reset του status του παιχνιδιού](#reset-του-status-του-παιχνιδιού)
          * [Λήψη του γύρου του παιχνιδιού](#λήψη-του-γύρου-του-παιχνιδιού)
       * [Entities](#entities)
-         * [Πίνακες](#boards)
-         * [Players](#players)
-         * [Game_status](#game_status)
+         * [Πίνακες Τοποθέτησης Πλοίων](#Πίνακες)
+         * [Players](#Players)
+         * [Game_status](#Game_status)
 
 
 # Demo Page
